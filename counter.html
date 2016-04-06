@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Counter</title>
+</head>    
+<body>
+	<button type="button" id="btn" onclick="counter()">Counter</button>
+	<div id="sum"></div>
+
+	<script type="text/javascript">
+		var btn = document.getElementById('btn');
+		var sum = document.getElementById('sum');
+		var count = 0;
+		function counter(){			
+			count++;
+			sum.innerHTML = count;
+		}
+	</script>
+</body>
+</html>
