@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Home work 3 Работа с узлами DOM</title>
+	<script type="text/javascript">
+		// выбор первого элемента
+		function selectFirstChild(){
+			resetItem();
+			var list = document.getElementById('list');
+			var firstItem = list.firstElementChild;
+			firstItem.style.backgroundColor = 'red';
+			firstItem.style.color = 'white';
+		};
+
+		// выбор последнего элемента
+		function selectLastChild(){
+			resetItem();
+			var list = document.getElementById('list');
+			var lastItem = list.lastElementChild;
+			lastItem.setAttribute('style', 'background-color: green;');
+			lastItem.style.color = 'white';
+		};
+
+		// выбор следующего элемента
+		function selectNextNode(){
+			resetItem();
+			var list = document.getElementById('list');
+			var nextItem = list.firstElementChild.nextElementSibling;
+			if(nextItem){
+				nextItem.setAttribute('style', 'background-color: orange; color: white;');
+			}			
+		};
+
+		// выбор следующего элемента по клику на предыдущем
+		// var list = document.getElementById('list');
+		// var item = list.children;
+		// for(var i = 0; i < item.length; i++){
+		// 	item.onclick = function(){
+		// 		this.nextElementSibling.style.color = 'red';
+		// 	};
+		// }
+			
+		// выбор предыдущего элемента
+		function selectPrevNode(){
+			resetItem();
+			var list = document.getElementById('list');
+			var prevItem = list.lastElementChild.previousElementSibling;
+			if(prevItem){
+				prevItem.setAttribute('style', 'background-color: blue; color: white;');
+			}
+		};
+
+		// добавление элемента
+		function createNewChild(){
+			var newItemLast = document.createElement('li');
+			newItemLast.innerHTML = 'List Item New Last';
+			var list = document.getElementById('list');
+			list.appendChild(newItemLast);
+		};
+
+		// удаление элемента
+		function removeLastChild(){
+			var list = document.getElementById('list');
+			var lastItem = list.lastElementChild;
+			list.removeChild(lastItem);
+		};
+
+		// добавление элемента в начало
+		function createNewChildAtStart(){
+			var list = document.getElementById('list');
+			var newItemFirst = document.createElement('li');
+			newItemFirst.innerHTML = 'List Item First';
+			list.insertBefore(newItemFirst, list.firstElementChild);
+		};
+
+		// сброс стилей элемента
+		function resetItem(){
+			var item = document.getElementsByTagName('li');
+			for(var i = 0; i < item.length; i++){
+				item[i].style.color = 'black';
+				item[i].style.backgroundColor = '';
+			}
+		};
+	</script>
+</head>    
+<body>
+	<ul id="list">
+		<li>List Item 1</li>
+		<li>List Item 2</li>
+		<li>List Item 3</li>
+		<li>List Item 4</li>
+		<li>List Item 5</li>
+	</ul>
+    <br />
+    <input type="button" onclick="selectFirstChild()" style="width: 210px;" value="Выбрать первый элемент" /><br />
+    <input type="button" onclick="selectLastChild()" style="width: 210px;" value="Выбрать последний элемент" /><br />
+    <input type="button" onclick="selectNextNode()" style="width: 210px;" value="Выбрать следующий элемент" /><br />
+    <input type="button" onclick="selectPrevNode()" style="width: 210px;" value="Выбрать предыдущий элемент" /><br />
+    <input type="button" onclick="createNewChild()" style="width: 210px;" value="Добавить элемент" /><br />
+    <input type="button" onclick="removeLastChild()" style="width: 210px;" value="Удалить элемент" /><br />
+    <input type="button" onclick="createNewChildAtStart()" style="width: 210px;" value="Добавить  в начало" /><br />
+</body>
+</html>
