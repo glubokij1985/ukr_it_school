@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>Home work 3 Работа с узлами DOM</title>
 	<script type="text/javascript">
+		var node = null;
 		// выбор первого элемента
 		function selectFirstChild(){
 			resetItem();
@@ -25,11 +26,20 @@
 		// выбор следующего элемента
 		function selectNextNode(){
 			resetItem();
-			var list = document.getElementById('list');
-			var nextItem = list.firstElementChild.nextElementSibling;
-			if(nextItem){
-				nextItem.setAttribute('style', 'background-color: orange; color: white;');
-			}			
+			if(node == null){
+				var list = document.getElementById('list');
+				node = list.firstElementChild;
+				node.setAttribute('style', 'background-color: orange; color: white;');
+				return;
+			}
+			node = node.nextElementSibling;
+			if(node != null){
+				node.setAttribute('style', 'background-color: orange; color: white;');
+			}
+
+//			if(nextItem){
+//				nextItem.setAttribute('style', 'background-color: orange; color: white;');
+//			}
 		};
 
 		// выбор следующего элемента по клику на предыдущем
@@ -45,10 +55,22 @@
 		function selectPrevNode(){
 			resetItem();
 			var list = document.getElementById('list');
-			var prevItem = list.lastElementChild.previousElementSibling;
-			if(prevItem){
-				prevItem.setAttribute('style', 'background-color: blue; color: white;');
+			if(node == null){
+				node = list.lastElementChild;
+				node.setAttribute('style', 'background-color: blue; color: white;');
+				return;
 			}
+			node = node.previousElementSibling;
+			if(node != null){
+				node.setAttribute('style', 'background-color: blue; color: white;');
+			}
+
+//			resetItem();
+//			var list = document.getElementById('list');
+//			var prevItem = list.lastElementChild.previousElementSibling;
+//			if(prevItem){
+//				prevItem.setAttribute('style', 'background-color: blue; color: white;');
+//			}
 		};
 
 		// добавление элемента
