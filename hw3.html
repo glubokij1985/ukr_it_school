@@ -9,7 +9,7 @@
 		function selectFirstChild(){
 			resetItem();
 			var list = document.getElementById('list');
-			var firstItem = list.firstElementChild;
+			var firstItem = node = list.firstElementChild;
 			firstItem.style.backgroundColor = 'red';
 			firstItem.style.color = 'white';
 		};
@@ -18,7 +18,7 @@
 		function selectLastChild(){
 			resetItem();
 			var list = document.getElementById('list');
-			var lastItem = list.lastElementChild;
+			var lastItem = node = list.lastElementChild;
 			lastItem.setAttribute('style', 'background-color: green;');
 			lastItem.style.color = 'white';
 		};
@@ -31,20 +31,16 @@
 				node = list.firstElementChild;
 				node.setAttribute('style', 'background-color: orange; color: white;');
 				return;
-			}
-			node = node.nextElementSibling;
+			}			
 			if(node != null){
+				node = node.nextElementSibling;
 				node.setAttribute('style', 'background-color: orange; color: white;');
 			}
-
-//			if(nextItem){
-//				nextItem.setAttribute('style', 'background-color: orange; color: white;');
-//			}
 		};
 
 		// выбор следующего элемента по клику на предыдущем
 		// var list = document.getElementById('list');
-		// var item = list.children;
+		// var item = [list.children];
 		// for(var i = 0; i < item.length; i++){
 		// 	item.onclick = function(){
 		// 		this.nextElementSibling.style.color = 'red';
@@ -60,17 +56,10 @@
 				node.setAttribute('style', 'background-color: blue; color: white;');
 				return;
 			}
-			node = node.previousElementSibling;
 			if(node != null){
+				node = node.previousElementSibling;
 				node.setAttribute('style', 'background-color: blue; color: white;');
 			}
-
-//			resetItem();
-//			var list = document.getElementById('list');
-//			var prevItem = list.lastElementChild.previousElementSibling;
-//			if(prevItem){
-//				prevItem.setAttribute('style', 'background-color: blue; color: white;');
-//			}
 		};
 
 		// добавление элемента
