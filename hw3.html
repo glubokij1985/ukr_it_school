@@ -3,6 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<title>Home work 3 Работа с узлами DOM</title>
+</head>
+<style>
+	input{
+		margin: 0 0 10px;
+	}
+</style>
+<body>
+	<ul id="list">
+		<li>List Item 1</li>
+		<li>List Item 2</li>
+		<li>List Item 3</li>
+		<li>List Item 4</li>
+		<li>List Item 5</li>
+	</ul>
+    <br />
+    <input type="button" onclick="selectFirstChild()" style="width: 210px;" value="Выбрать первый элемент" /><br />
+    <input type="button" onclick="selectLastChild()" style="width: 210px;" value="Выбрать последний элемент" /><br />
+    <input type="button" onclick="selectNextNode()" style="width: 210px;" value="Выбрать следующий элемент" /><br />
+    <input type="button" onclick="selectPrevNode()" style="width: 210px;" value="Выбрать предыдущий элемент" /><br />
+    <input type="button" onclick="createNewChild()" style="width: 210px;" value="Добавить элемент" /><br />
+    <input type="button" onclick="removeLastChild()" style="width: 210px;" value="Удалить элемент" /><br />
+    <input type="button" onclick="createNewChildAtStart()" style="width: 210px;" value="Добавить  в начало" /><br />
+
 	<script type="text/javascript">
 		var node = null;
 		// выбор первого элемента
@@ -31,22 +54,23 @@
 				node = list.firstElementChild;
 				node.setAttribute('style', 'background-color: orange; color: white;');
 				return;
-			}			
+			}
 			if(node != null){
 				node = node.nextElementSibling;
 				node.setAttribute('style', 'background-color: orange; color: white;');
 			}
 		};
 
-		// выбор следующего элемента по клику на предыдущем
-		// var list = document.getElementById('list');
-		// var item = [list.children];
-		// for(var i = 0; i < item.length; i++){
-		// 	item.onclick = function(){
-		// 		this.nextElementSibling.style.color = 'red';
-		// 	};
-		// }
-			
+		// выбор элемента по клику
+		var list = document.getElementById('list');
+		var item = list.children;
+		for(var i = 0; i < item.length; i++){
+			item[i].onclick = function(){
+				resetItem();
+				this.setAttribute('style', 'background-color: #886119; color: white;');
+			}
+		}
+
 		// выбор предыдущего элемента
 		function selectPrevNode(){
 			resetItem();
@@ -94,22 +118,5 @@
 			}
 		};
 	</script>
-</head>    
-<body>
-	<ul id="list">
-		<li>List Item 1</li>
-		<li>List Item 2</li>
-		<li>List Item 3</li>
-		<li>List Item 4</li>
-		<li>List Item 5</li>
-	</ul>
-    <br />
-    <input type="button" onclick="selectFirstChild()" style="width: 210px;" value="Выбрать первый элемент" /><br />
-    <input type="button" onclick="selectLastChild()" style="width: 210px;" value="Выбрать последний элемент" /><br />
-    <input type="button" onclick="selectNextNode()" style="width: 210px;" value="Выбрать следующий элемент" /><br />
-    <input type="button" onclick="selectPrevNode()" style="width: 210px;" value="Выбрать предыдущий элемент" /><br />
-    <input type="button" onclick="createNewChild()" style="width: 210px;" value="Добавить элемент" /><br />
-    <input type="button" onclick="removeLastChild()" style="width: 210px;" value="Удалить элемент" /><br />
-    <input type="button" onclick="createNewChildAtStart()" style="width: 210px;" value="Добавить  в начало" /><br />
 </body>
 </html>
