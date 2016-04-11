@@ -23,6 +23,11 @@
     <div>
         <h2>Заголовок</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
+        <ul>
+            <li>Чай</li>
+            <li>Молоко</li>
+            <li>Кофе</li>
+        </ul>
     </div>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
@@ -51,16 +56,16 @@
         <li>Молоко</li>
     </ul>
     <script>
-    var allDiv = document.getElementsByTagName("div");
-    for (var i = allDiv.length - 1; i >= 0; i--) {
-        var nextDivSibling = allDiv[i].nextSibling;
-        if (nextDivSibling.nodeType != 1) {
-            nextDivSibling = nextDivSibling.nextSibling;
-        };
-        else if (nextDivSibling.tagName == "P") {
-            nextDivSibling.style.backgroundColor = "yellow";
-        };
-    };
+//    var allDiv = document.getElementsByTagName("div");
+//    for (var i = allDiv.length - 1; i >= 0; i--) {
+//        var nextDivSibling = allDiv[i].nextSibling;
+//        if (nextDivSibling.nodeType != 1) {
+//            nextDivSibling = nextDivSibling.nextSibling;
+//        };
+//        else if (nextDivSibling.tagName == "P") {
+//            nextDivSibling.style.backgroundColor = "yellow";
+//        };
+//    };
 
     var allParagraphs = document.getElementsByTagName("p");
     for (var i = allParagraphs.length - 1; i >= 0; i--) {

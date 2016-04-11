@@ -19,8 +19,18 @@
     <h1>Главная</h1>
 
     <div>
+        <ul>
+            <li>Кофе</li>
+            <li>Чай</li>
+            <li>Молоко</li>
+        </ul>
         <h2>Заголовок</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
+        <ul>
+            <li>Кофе</li>
+            <li>Чай</li>
+            <li>Молоко</li>
+        </ul>
     </div>
 
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, quas, officiis soluta, eligendi perspiciatis dolore inventore consequuntur possimus dolores cupiditate provident id repudiandae consequatur nobis veniam, excepturi impedit consectetur eos!</p>
@@ -57,9 +67,21 @@
         };
 
         var p = document.getElementsByTagName('p');
-        for(var i = 0; i < p.length; i++){
-            
-        }
+        for(var i = 0; i < p.length; i++) {
+            var next_el = p[i].nextElementSibling;
+            if (next_el != null) {
+                if (next_el.tagName == 'UL') {
+                    next_el.style.background = 'red';
+                } else {
+                    while (next_el.nextElementSibling != null) {
+                        next_el = next_el.nextElementSibling;
+                        if (next_el != null && next_el.tagName == 'UL') {
+                            next_el.style.background = 'red';
+                        }
+                    }
+                }
+            }
+        };
     </script>
 </body>
 </html>
