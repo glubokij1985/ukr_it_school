@@ -1,18 +1,21 @@
+<!-- 
+    Перепишите все селекторы из первой папки 001_CSS_Selectors с помощью известных Вам методов и свойств.
+ -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Children, Parent</title>
+    <title>Children, Parent - Glubokij</title>
     <style>
-        p {
-            color: brown;
-        }
-        div p a span {
-            color: red;
-        }
-        div > span {
-            color: green;
-        }
+/*    p {
+        color: brown;
+    }
+    div span {
+        color: red;
+    }
+    div > span {
+        color: green;
+    }*/
     </style>
 </head>
 <body>
@@ -21,8 +24,29 @@
         <span> 
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco <span>SECOND SPAN</span> laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
         </span>
-        <p>Lorem <span>ipsum</span> dolor sit amet, consectetur adipisicing elit. Quam fugiat voluptatem in, impedit, provident illum commodi blanditiis! Molestiae dicta, exercitationem repellat illo ratione laboriosam libero voluptatem, necessitatibus blanditiis unde vel!</p>
     </div>
     <a href="#">Link</a>
+    <script>
+        var p = document.getElementsByTagName('p');
+        if(p){
+            for(var i = 0; i < p.length; i++){
+                p[i].style.color = 'brown';
+            }
+        };
+
+        var div = document.getElementsByTagName('div')[0];
+        var spansInDiv = div.getElementsByTagName('span');
+        for(var i = 0; i < spansInDiv.length; i++){
+            spansInDiv[i].style.color = 'red';
+        };
+
+        var div = document.getElementsByTagName('div')[0];
+        var spanChildren = div.children;        
+        for(var i = 0; i < spanChildren.length; i++){
+            if(spanChildren[i].tagName == 'SPAN'){
+                spanChildren[i].style.color = 'green';
+            }
+        };            
+    </script>
 </body>
 </html>

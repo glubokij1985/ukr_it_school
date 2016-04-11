@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Id and classes - Glubokij</title>
+    <title>Id and classes</title>
     <style>
 /*        #id1 {
             color: red;
@@ -22,16 +22,15 @@
 <body>
     <h1 class="class1" id="id1">Title</h1>
     <script>
-        var id1 = document.getElementById('id1');
-        id1.style.color = 'red';
-        id1.style.cssText = 'margin-top: 10px; background: red;';
+        var headingId = document.getElementById("id1");
+        headingId.style.color = "red";
 
-        var class1 = document.querySelector('.class1');
-        class1.style.cssText += 'color: blue; font-size: 14px; text-decoration: underline;';
-
-        class1.classList.add('newclass');
-        var newclass = document.getElementsByClassName('newclass')[0];
-        console.log(window.getComputedStyle(newclass, ''));
+        var headingClass = document.getElementsByClassName("class1")[0];
+        headingClass.style.cssText = "color: blue; font-size: 14px; text-decoration: underline; margin-top: 10px; background: red;"
+        
+        headingClass.classList.add("newclass");
+        var newClass = document.getElementsByClassName("newclass")[0];
+        console.log(getComputedStyle(newClass, ""));
     </script>
 </body>
 </html>

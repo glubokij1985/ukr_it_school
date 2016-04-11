@@ -1,22 +1,38 @@
+<!-- 
+    Перепишите все селекторы из первой папки 001_CSS_Selectors с помощью известных Вам методов и свойств.
+ -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Attr</title>
+    <title>Attr - Glubokij</title>
     <style>
-        a[target] {
+/*        a[target] {
             background-color: yellow;
         }
-        a[target='_blank'] { 
+        a[target=_blank] { 
             background-color: red;
-        }
+}*/
     </style>
 </head>
 <body>
+
+    <p>The links with a target attribute gets a yellow background:</p>
+
     <a href="#" target="_top">w3schools.com</a>
     <a href="http://www.google.com" target="_blank">google.com</a>
     <a href="http://www.wikipedia.org" target="_self">wikipedia.org</a>
     <a href="#">Someting</a>
-
+    <script>
+        var a = document.getElementsByTagName('a');
+        for(var i = 0; i < a.length; i++){
+            if(a[i].getAttribute('target')){
+                a[i].style.backgroundColor = 'yellow';
+            };
+            if(a[i].getAttribute('target') == '_blank'){
+                a[i].style.backgroundColor = 'red';
+            }
+        }            
+    </script>
 </body>
 </html>

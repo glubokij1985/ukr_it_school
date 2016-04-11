@@ -1,18 +1,18 @@
+<!-- 
+    Перепишите все селекторы из первой папки 001_CSS_Selectors с помощью известных Вам методов и свойств.
+ -->
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>All, Elements</title>
+    <title>All_elements - Glubokij</title>
     <style>
-    * {
+/*    * {
         color: red;
         text-decoration: none;
     }
     p {
         color: brown;
-    }
-    .class {
-        color: green;
     }
     a {
         font-weight: bold;
@@ -21,12 +21,31 @@
     }
     p, a {
         text-transform: uppercase;
-    }
+    }*/
     </style>
 </head>
 <body>
     <h1 class="class1" id="id1">Title</h1>
-    <p class="class">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
     <a href="#">Link</a>
+    <script>
+        var all = document.body.children;
+        for(var i = 0; i < all.length; i++){
+            all[i].style.cssText = 'color: red; text-decoration: none;'
+        };
+
+        var p = document.getElementsByTagName('p')[0];
+        p.style.cssText += 'color: brown;';
+
+        var a = document.getElementsByTagName('a');
+        for(var i = 0; i < a.length; i++){
+            a[i].style.cssText = 'font-weight: bold; font-style: italic; text-decoration: underline;'
+        };
+
+        var pA = document.querySelectorAll('p, a');
+        for(var i = 0; i < pA.length; i++){
+            pA[i].style.textTransform = 'uppercase';
+        }
+    </script>
 </body>
 </html>
