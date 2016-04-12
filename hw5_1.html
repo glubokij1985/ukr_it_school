@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework - Glubokij</title>
+</head>
+<body>
+<!--     Создайте счетчик секунд, который начинает отчет с 1 и заканчивается на 30, также добавьте кнопки который останавливают отчет, и запускают его заново и добавьте кнопку обнуляющую отчет. Также попробуйте изменить код так чтобы отчет начиналься с 30 и заканчивалься на 1. -->
+    <p id="demoP"></p>
+    <input type="button" name="reset" value="Сброс" onclick="resetHandler()" >
+    <input type="button" name="reset" value="Старт" onclick="secondsCounter(this);" >
+    <input type="button" name="reset" value="Стоп" onclick="stopHandler()" >
+    <script>
+        var div = document.getElementById('demoP');
+        var counter;
+        var countObj = {};
+        countObj.count = 0;
+        function secondsCounter(){
+            if(countObj.count != 0){
+                var count = countObj.count;
+                counter = setTimeout(function tik(){
+                    count += 1;
+                    countObj.count = count;
+                    div.innerHTML = count + ' сек.';
+                    counter = setTimeout(tik, 1000);
+                    if(count == 30){
+                        stopHandler();
+                    }
+                }, 1000);
+            } else {
+                var count = 0;
+                countObj.count = count;
+            }
+        };
+        function stopHandler(){
+            clearTimeout(counter);
+        };
+        function resetHandler(){
+            count = 0;
+        };
+    </script>
+</body>
+</html>

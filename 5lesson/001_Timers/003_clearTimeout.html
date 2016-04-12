@@ -1,0 +1,32 @@
+<!-- clearTimeout - Отменяет выполнение кода setTimeout -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>All, Elements</title>
+</head>
+<body>
+
+<p>Ждем 3 секунды</p>
+
+<button onclick="myFunction()">Пробовать</button>
+<button onclick="myStopFunction()">Остановить</button>
+
+<script>
+    var myVar;
+
+    function myFunction() {
+        var timeOut = 3000;
+        myVar = setTimeout(function(){
+            alert("Hello");
+        }, timeOut);
+        console.log(myVar);
+    }
+
+    function myStopFunction() {
+        clearTimeout(myVar);
+    }
+</script>
+
+</body>
+</html>
