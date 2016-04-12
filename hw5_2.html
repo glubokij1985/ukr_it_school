@@ -5,7 +5,7 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>Homework</title>
+    <title>Homework - Glubokij</title>
 </head>
 <body>
     <script>
@@ -29,10 +29,10 @@
         var ul = document.getElementById('ul1');
         for(var i = 0; i < substring.length; i++){
             var li = document.createElement('li');
-            ul.appendChild(li);
-            var lishki = document.querySelectorAll('#ul1 li');
-            for(var j = 0; j < lishki.length; j++){
-                lishki[j].innerHTML = 'ggg';
+            var lishki = ul.appendChild(li);
+            for(var j = 0; j < substring.length; j++){
+                lishki.innerHTML = substring[i];
+                // lishki[0].toUpperCase();
             }
         }
     </script>

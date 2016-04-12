@@ -13,14 +13,18 @@
     <script>
         var div = document.getElementById('demoP');
         var counter;
-        var countObj = {};
-        countObj.count = 0;
+        // var countObj = {};
+        // countObj.count = 0;
+        var count = 0;
         function secondsCounter(){
-            if(countObj.count != 0){
-                var count = countObj.count;
+            // if(countObj.count == 0){
+                // var count = countObj.count;
+                // var count = 0;
+            var countMemory;
+            if(count == 0){
                 counter = setTimeout(function tik(){
-                    count += 1;
-                    countObj.count = count;
+                    countMemory = count++;
+                    // countObj.count = count;
                     div.innerHTML = count + ' сек.';
                     counter = setTimeout(tik, 1000);
                     if(count == 30){
@@ -28,8 +32,10 @@
                     }
                 }, 1000);
             } else {
-                var count = 0;
-                countObj.count = count;
+                countMemory++;
+                // counter();
+                // var count = 0;
+                // countObj.count = count;
             }
         };
         function stopHandler(){
