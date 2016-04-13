@@ -16,12 +16,14 @@
         var count = 0;
         var countMemory = 0;
         var delay = 1000;
-        function secondsCounter(){
+        function secondsCounter(){            
             counter = setTimeout(function tik(){
-                countMemory = count++;
-                div.innerHTML = countMemory + ' сек.';
-                counter = setTimeout(tik, delay);
-            }, delay);
+                if(count <= 30){
+                    countMemory = count++;
+                    div.innerHTML = countMemory + ' сек.';
+                    counter = setTimeout(tik, delay);
+                }
+            }, delay);            
         };
         function stopHandler(){
             clearTimeout(counter);

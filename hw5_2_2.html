@@ -21,7 +21,9 @@
             for(var i = 0; i < substring.length; i++){
                 var li = document.createElement('li');
                 var lishki = ul.appendChild(li);
-                lishki.innerHTML = substring[i];
+                for(var j = 0; j < substring.length; j++){
+                    lishki.innerHTML = substring[i];
+                }
             };
         
 
@@ -40,44 +42,14 @@
             //     }
             // };
                 
-
-            var countA = phrase.match(/a/gi);
-            if(countA){
-                alert('Символ \'a\' встречается ' + countA.length + ' раз');
-            } else {
-                countA == 0;
-                alert('Символ \'a\' встречается ' + countA + ' раз');
+            var sum = 0;
+            for(var i = 0; i < phrase.length; i++){
+                if(phrase[i].indexOf('a') != -1){
+                    sum++;
+                }
             };
-        };
-//        var substrA = phrase.split('');
-//        for(var i = 0; i < substrA.length; i++){
-//            var countA = 0;
-//            if(substrA.match(/a/g)){
-//                countA++;
-//            } else {
-//                countA = countA;
-//                continue;
-//            }
-//            console.log(countA);
-//
-//        };
-//        console.log(substrA);
-
-
-
-
-//        var arrFirstLi = substring.slice(0, 1);
-//        var strFirstLi = arrFirstLi.join('');
-//        strFirstLi = strFirstLi.toUpperCase();
-//        console.log(strFirstLi);
-
-
-
-//        console.log(liAll[0]);
-//        var firstLi = liAll.slice(0, 1);
-//        firstLi = firstLi.join('');
-//        firstLi = firstLi.toUpperCase();
-//        console.log(firstLi);
+            alert(sum);
+        };  
     </script>
 </body>
 </html>
