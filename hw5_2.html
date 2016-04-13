@@ -10,31 +10,61 @@
 <body>
     <script>
         var phrase = prompt('Введите фразу:', '');
-        var substrA = phrase.split('');
-        for(var i = 0; i < substrA.length; i++){
-            var countA = 0;
-            if(substrA[i] == 'a'){
-                countA++;
-            };
-            console.log(countA);
-
-        };
-        console.log(substrA);
-
-        var substring = phrase.split(' ');
 
         var body = document.body;
         var ulString = '<ul id="ul1"></ul>';
         body.insertAdjacentHTML('afterBegin', ulString);
         var ul = document.getElementById('ul1');
+
+        var substring = phrase.split(' ');
         for(var i = 0; i < substring.length; i++){
             var li = document.createElement('li');
             var lishki = ul.appendChild(li);
             for(var j = 0; j < substring.length; j++){
                 lishki.innerHTML = substring[i];
-                // lishki[0].toUpperCase();
             }
-        }
+        };
+
+        var liAll = document.getElementsByTagName('li');
+        var firstLiText = liAll[0].innerHTML.toUpperCase();
+        var firstLi = liAll[0].innerHTML = firstLiText;
+
+        var countA = phrase.match(/a/gi);
+        if(countA){
+            alert(countA.length);
+        } else {
+            countA == 0;
+            alert(countA);
+        };
+//        var substrA = phrase.split('');
+//        for(var i = 0; i < substrA.length; i++){
+//            var countA = 0;
+//            if(substrA.match(/a/g)){
+//                countA++;
+//            } else {
+//                countA = countA;
+//                continue;
+//            }
+//            console.log(countA);
+//
+//        };
+//        console.log(substrA);
+
+
+
+
+//        var arrFirstLi = substring.slice(0, 1);
+//        var strFirstLi = arrFirstLi.join('');
+//        strFirstLi = strFirstLi.toUpperCase();
+//        console.log(strFirstLi);
+
+
+
+//        console.log(liAll[0]);
+//        var firstLi = liAll.slice(0, 1);
+//        firstLi = firstLi.join('');
+//        firstLi = firstLi.toUpperCase();
+//        console.log(firstLi);
     </script>
 </body>
 </html>

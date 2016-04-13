@@ -13,36 +13,23 @@
     <script>
         var div = document.getElementById('demoP');
         var counter;
-        // var countObj = {};
-        // countObj.count = 0;
         var count = 0;
+        var countMemory = 0;
+        var delay = 1000;
         function secondsCounter(){
-            // if(countObj.count == 0){
-                // var count = countObj.count;
-                // var count = 0;
-            var countMemory;
-            if(count == 0){
-                counter = setTimeout(function tik(){
-                    countMemory = count++;
-                    // countObj.count = count;
-                    div.innerHTML = count + ' сек.';
-                    counter = setTimeout(tik, 1000);
-                    if(count == 30){
-                        stopHandler();
-                    }
-                }, 1000);
-            } else {
-                countMemory++;
-                // counter();
-                // var count = 0;
-                // countObj.count = count;
-            }
+            counter = setTimeout(function tik(){
+                countMemory = count++;
+                div.innerHTML = countMemory + ' сек.';
+                counter = setTimeout(tik, delay);
+            }, delay);
         };
         function stopHandler(){
             clearTimeout(counter);
         };
         function resetHandler(){
-            count = 0;
+            countMemory = count = 0;
+            div.innerHTML = countMemory + ' сек.';
+            stopHandler();
         };
     </script>
 </body>
