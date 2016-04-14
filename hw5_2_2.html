@@ -25,26 +25,18 @@
                     lishki.innerHTML = substring[i];
                 }
             };
-        
 
             var liAll = document.getElementsByTagName('li');
             var firstLiText = liAll[0].innerHTML.toUpperCase();
             var firstLi = liAll[0].innerHTML = firstLiText;
+            for (var i = 1; i < liAll.length; i++) {
+                var otherLiText = liAll[i].innerHTML.toLowerCase();
+                var otherLi = liAll[i].innerHTML = otherLiText;
+            };
 
-            // var liAll = document.getElementsByTagName('li');
-            // for(var i = 0; i < liAll.length; i++){
-            //     if(i == 0){
-            //         var firstLiText = liAll[0].innerHTML.toUpperCase();
-            //         var firstLi = liAll[0].innerHTML = firstLiText;
-            //     } else {
-            //         liAll[i].innerHTML.toLowerCase();
-            //         liAll[i].innerHTML = liAll[i].innerHTML;
-            //     }
-            // };
-                
             var sum = 0;
             for(var i = 0; i < phrase.length; i++){
-                if(phrase[i].indexOf('a') != -1){
+                if(phrase[i].indexOf('a') != -1){ // зависит от регистра
                     sum++;
                 }
             };

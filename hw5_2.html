@@ -26,8 +26,14 @@
         
 
             var liAll = document.getElementsByTagName('li');
+            var liOne = liAll[0];
             var firstLiText = liAll[0].innerHTML.toUpperCase();
             var firstLi = liAll[0].innerHTML = firstLiText;
+            for (var i = 1; i < liAll.length; i++) {
+                var otherLiText = liAll[i].innerHTML.toLowerCase();
+                var otherLi = liAll[i].innerHTML = otherLiText;
+            };
+
 
             // var liAll = document.getElementsByTagName('li');
             // for(var i = 0; i < liAll.length; i++){
@@ -41,7 +47,7 @@
             // };
                 
 
-            var countA = phrase.match(/a/gi);
+            var countA = phrase.match(/a/gi); // не зависит от регистра
             if(countA){
                 alert('Символ \'a\' встречается ' + countA.length + ' раз');
             } else {
