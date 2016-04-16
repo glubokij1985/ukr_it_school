@@ -1,0 +1,57 @@
+<!-- Доработайте пример, 005_thisExample.html, при наведении мыши к одному из блоков, цвет блока должен измениться, на уникальный, такой которого еще нету у существующих блоков. Также выведите в блок текстовое оповещение о информации цвета, который используется для фона данного блока. При попытке закрыть вкладку, придупредите пользователя о том что информация будет утеряна. Используйте window.onload.  -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ключевое слово this</title>
+    <style>
+        div {
+            background-color:green;
+            display: block;
+            height: 100px;
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        window.onbeforeunload = function(){
+            return 'Точно закрыть?';
+        };
+
+        window.onload = function(){
+            var div = document.getElementsByTagName('div');
+
+            function randomNum(min, max){
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            };
+
+            for(var i = 0; i < div.length; i++){
+                div[i].onmouseover = function divHover(event){ // чем отличается использование this от event?
+                    var e = event || window.event;
+                    var currentDiv = e.target;
+                    var randomColor = 'rgb(' + randomNum(0, 255) + ', ' + randomNum(0, 255) + ', ' + randomNum(0, 255) + ')';
+                    currentDiv.style.backgroundColor = randomColor;
+                    currentDiv.innerHTML = this.style.backgroundColor;
+                };
+            };
+
+            // то же самое, только с this
+            // for(var i = 0; i < div.length; i++){
+            //     div[i].onmouseover = function divHover(){ // чем отличается использование this от event?
+            //         var randomColor = 'rgb(' + randomNum(0, 255) + ', ' + randomNum(0, 255) + ', ' + randomNum(0, 255) + ')';
+            //         this.style.backgroundColor = randomColor;
+            //         this.innerHTML = this.style.backgroundColor;
+            //     };
+            // };
+        };
+    </script>
+</script>
+</body>
+</html>

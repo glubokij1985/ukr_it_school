@@ -1,0 +1,43 @@
+<!-- Напишите регулярные выражения, которые будут выбирать 
+    индекс - 55535 - 5 numbers
+    ip адресс, пример 255.255.255.255
+    цены в долларах - $0.84, $2.84, $4
+    дата в виде - 30/12/2014 - день, месяц, год
+ -->
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework - Glubokij</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// 5 numbers
+		var numbers = 55535;
+		var regNum = /\d{5}/;
+		var resultNum = regNum.test(numbers);
+		console.log(resultNum);
+
+		// ip address
+		var ip = '255.255.255.255';
+		var regIP = /(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/;
+		var resultIP = regIP.test(ip);
+		console.log(resultIP);
+
+		// price dollars
+		var prices = ['$0.84', '$2.84', '$4'];
+		var regPrice = /^\$(\d+)(\.(\d+))?$/; // здесь на онлайн проверке была ошибка, а в браузере все пучком
+		for(var i = 0; i < prices.length; i++){
+			var resultPrices = regPrice.test(prices[i]);
+			console.log(resultPrices);
+		};
+
+		// date
+		var date = '30/12/2014';
+		var regDate = /(\d{1,2})\/(\d{1,2})\/([0-9]{4})/; // чем отличается [0-9]{4} от \d{4} и всегда ли нужно писать () (в примере с датой нет скобок) и обязательно ли писать начало ^ и конец $ строки и чем отличается () от [] !?
+		var resultDate = regDate.test(date);
+		console.log(resultDate);
+	</script>
+	
+</body>
+</html>
