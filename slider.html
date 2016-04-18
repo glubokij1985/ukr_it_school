@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Ключевое слово this</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #wrap{
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+        }
+        ul{
+            position: relative;
+        }
+        ul:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        li{
+            width: 200px;
+            height: 200px;
+            float: left;
+            list-style-type: none;
+        }
+        span{
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <ul id="slider">
+            <li style="background-color: green;">1</li>
+            <li style="background-color: red;">2</li>
+            <li style="background-color: blue;">3</li>
+            <li style="background-color: orange;">4</li>
+            <li style="background-color: brown;">5</li>            
+        </ul>
+    </div>
+    <span id="next">next</span>
+    <script type="text/javascript">
+        var ul = document.getElementById('slider'),
+            next = document.getElementById('next'),
+            widthLi = ul.children[0].clientWidth,
+            countLi = ul.children.length,
+            widthUl = countLi * widthLi,
+            limit = -(widthLi * (countLi - 1));
+
+            createStyle('width', widthUl, ul);
+
+            next.onclick = slideNext;
+
+            function slideNext(){
+                var leftUl = isNaN(parseInt(ul.style.left)) ? 0 : parseInt(ul.style.left);
+                if(leftUl == limit){
+                    return;
+                } else {
+                    createStyle('left', (leftUl - widthLi), ul);
+                }
+            };
+
+            function createStyle(prop, args, el){
+                el.style.cssText += prop + ": " + args + "px";
+            };
+    </script>
+</body>
+</html>
