@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Slider</title>
+    <style>
+        #wrap {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+        }
+        ul{
+            position: relative;
+        }
+        li {
+            width: 200px;
+            height: 200px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        #next{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <ul id="slider">
+            <li style="background-color: green;"></li>
+            <li style="background-color: red;"></li>
+            <li style="background-color: blue;"></li>
+            <li style="background-color: orange;"></li>
+            <li style="background-color: brown;"></li>
+        </ul>
+    </div>
+    <span id="next">next</span>
+
+    <script type="text/javascript">
+        var ul = document.getElementById('slider');
+        var li = ul.children;
+        var countLi = li.length;
+        var stylesLi = getComputedStyle(li[0]);
+        var widthLi = stylesLi.width;
+        var widthUl = countLi * widthLi;
+        var next = document.getElementById('next');
+
+
+        next.onclick = nextSlide;
+
+        function nextSlide(){
+            var left = isNaN(parseInt(ul.style.left)) ? 0 : parseInt(ul.style.left);
+            if(left == limit){
+                return;
+            } else {
+                createStyle('left', (left - widthLi),ul);
+            }
+            ul.style.left = -parseInt(widthLi);
+            console.log(ul.style.left);
+        }
+    </script>
+</body>
+</html>
