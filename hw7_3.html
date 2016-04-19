@@ -1,0 +1,50 @@
+<!-- Доработайте пример 004_Attr_Tech.html таким образом, чтобы при наведении на span элементы, подсказка сплыва под ними, а не в модальном окне -->
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    .tooltip-content {
+      position: absolute;
+      border: 1px solid #ccc;
+      padding: 3px;
+    }
+  </style>  
+</head>
+<body>
+  <div id="main-div">
+    <span data-tooltip="наведите">наведите</span> 
+    <span data-tooltip="для">для</span> 
+    <span data-tooltip="подсказки">подсказки</span>
+  </div>
+  <script>
+    window.addEventListener('load', function(){
+      var mainDiv = document.getElementById('main-div'),
+          span = document.querySelectorAll('span');
+
+          mainDiv.addEventListener('mouseover', showTooltip);
+
+          function showTooltip(event){
+            var target = event && event.target || event.srcElement, // последнее "или" для IE
+                tooltipText = target.getAttribute('data-tooltip'),
+                tooltipWrap = document.createElement('span'),
+                tooltipWrapClass = tooltipWrap.classList.add('tooltip-content');
+            // console.log(tooltipText);
+            // var tooltip = tooltipWrapClass.innerHTML = tooltipText;
+
+
+                // tooltipWrap = '<span></span>',
+                // tooltipText = target.getAttribute('data-tooltip');
+            if(target.nodeName == 'SPAN'){
+              target.appendChild(tooltipWrap);
+              // alert(tooltipText);
+              // tooltipWrap = target.insertAdjacentHTML('beforeEnd', tooltipWrap).innerHTML = tooltipText;
+              // tooltipWrap.innerHTML = tooltipText;
+            } else {
+              return;
+            }
+          };
+    });
+  </script>
+</body>
+</html>

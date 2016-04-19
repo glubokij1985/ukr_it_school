@@ -1,0 +1,46 @@
+<!--
+Создайте ссылку и див с текстом внутри, который изначально при загрузке страницы будет скрыт. При клике на ссылку див пропадает, если повторно нажать ссылку див и текст должны вернуться. Также создайте кнопку, которая будет отменять выполнение обработчика клика по ссылке.
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework - Glubokij</title>
+    <style>
+        .details {
+            display: none;
+        }
+        .spantoogle {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <a href="#" id="more-link">Ссылка<br />
+        <div class="details spantoogle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur a eum, laudantium delectus! Omnis asperiores fuga odio laudantium commodi delectus quos molestias reiciendis libero distinctio quis tempore, iure harum reprehenderit.</div><br />
+        <div class="info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed placeat debitis, quo aperiam culpa soluta. Odit consectetur, eveniet perferendis esse ex earum a, expedita ipsa velit maxime quia quo alias!</div>
+    </a>
+    <button id="remove">removeEventListener</button>
+    <script>
+        window.addEventListener('load', function(){
+            var link = document.getElementById('more-link'),
+                btn = document.getElementById('remove'),
+                div = document.querySelector('.details');
+
+            link.addEventListener('click', toggleDiv);
+
+            function toggleDiv(event){
+                event.preventDefault();
+                div.classList.toggle('spantoogle');
+            };
+
+            btn.addEventListener('click', toggleCancel);
+
+            function toggleCancel(){
+                link.removeEventListener('click', toggleDiv);
+            };
+        });
+        // почему в решении по другому??? и можно ли так?
+    </script>
+</body>
+</html>
