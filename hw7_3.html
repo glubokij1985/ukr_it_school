@@ -27,23 +27,28 @@
           function showTooltip(event){
             var target = event && event.target || event.srcElement, // последнее "или" для IE
                 tooltipText = target.getAttribute('data-tooltip'),
-                tooltipWrap = document.createElement('span'),
-                tooltipWrapClass = tooltipWrap.classList.add('tooltip-content');
-            // console.log(tooltipText);
-            // var tooltip = tooltipWrapClass.innerHTML = tooltipText;
+                tooltipWrap = document.createElement('div');
 
-
-                // tooltipWrap = '<span></span>',
-                // tooltipText = target.getAttribute('data-tooltip');
-            if(target.nodeName == 'SPAN'){
+            if(target.getAttribute('data-tooltip') != null){
               target.appendChild(tooltipWrap);
-              // alert(tooltipText);
-              // tooltipWrap = target.insertAdjacentHTML('beforeEnd', tooltipWrap).innerHTML = tooltipText;
-              // tooltipWrap.innerHTML = tooltipText;
+              var tooltipWrapClass = tooltipWrap.classList.add('tooltip-content');
+              target.children[0].innerHTML = tooltipText;
             } else {
               return;
             }
           };
+
+          mainDiv.addEventListener('mouseout', hideTooltip);
+
+          function hideTooltip(event){
+            var target = event && event.target || event.srcElement,
+                tooltip = target.children[0];
+            if(target.getAttribute('data-tooltip') != null){
+              target.removeChild(tooltip);
+            } else {
+              return;
+            }
+          }
     });
   </script>
 </body>
