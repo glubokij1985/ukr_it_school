@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+    div {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    ul {
+        padding: 0;
+        margin: 0;
+        display: table;
+        position: relative;
+        list-style: none;
+    }
+    
+    li {
+        width: 200px;
+        height: 200px;
+        float: left;
+    }
+    
+    .one {
+        background: red;
+    }
+    
+    .two {
+        background: green;
+    }
+    
+    .three {
+        background: skyblue;
+    }
+    </style>
+    <div>
+        <ul>
+            <li class="one">First-slide</li>
+            <li class="two">Second-slide</li>
+            <li class="three">Third-slide</li>
+        </ul>
+    </div>
+    <div class="controls">
+        <span data-derection="prev">Prev</span>
+        <span data-derection="next">Next</span>
+    </div>
+    <script>
+    (function() {
+
+        var list = document.querySelector('ul'),
+            controls = document.querySelector('.controls'),
+            count = list.children.length,
+            width = parseInt(window.getComputedStyle(list.firstElementChild).getPropertyValue('width'));
+
+        countWidth();
+
+        controls.addEventListener('click', clickHandler)
+
+        function countWidth(left) {
+        	var left = left ? left : 0;
+            list.style.cssText = "width:" + (count + 1) * width + "px; left: "+(left)+"px";
+        }
+
+        function clickHandler() {
+
+            var target = event.target,
+                attr = target.getAttribute("data-derection");
+
+            if(attr && attr == "next"){
+            	var cloningElement = list.firstElementChild;
+            		clonedElement = cloningElement.cloneNode(true);
+            	countWidth('-200');
+            	list.appendChild(clonedElement);
+
+            } else if(attr && attr == "prev"){
+            	var cloningElement = list.lastElementChild;
+            		clonedElement = cloningElement.cloneNode(true);
+            	countWidth('-200');
+            	list.insertBefore(clonedElement, list.firstElementChild);
+            } else {
+ 				return;
+            }
+            list.removeChild(cloningElement);
+            countWidth();
+        }
+
+    }());
+    </script>
+</body>
+
+</html>

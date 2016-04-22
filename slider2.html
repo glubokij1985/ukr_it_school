@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Ключевое слово this</title>
+    <title>Slider2</title>
     <style>
         *{
             margin: 0;
@@ -43,26 +43,42 @@
             <li style="background-color: brown;">5</li>            
         </ul>
     </div>
-    <span id="next">next</span>
+    <div id="btn-holder">
+        <span data-attr="prev">prev</span>
+        <span data-attr="next">next</span>
+    </div>
     <script type="text/javascript">
         var ul = document.getElementById('slider'),
-            next = document.getElementById('next'),
+            btnHolder = document.getElementById('btn-holder'),
+            li = ul.children,
             widthLi = ul.children[0].clientWidth,
             countLi = ul.children.length,
-            widthUl = countLi * widthLi,
-            limit = -(widthLi * (countLi - 1));
+            widthUl = countLi * widthLi;
+
             createStyle('width', widthUl, ul);
-            next.onclick = slideNext;
-            function slideNext(){
-                var leftUl = isNaN(parseInt(ul.style.left)) ? 0 : parseInt(ul.style.left);
-                if(leftUl == limit){
-                    return;
-                } else {
-                    createStyle('left', (leftUl - widthLi), ul);
-                }
+
+            btnHolder.addEventListener('click', move);
+
+            function move(event){
+                var target = event && event.target || event.srcElement,
+                    attr = target.getAttribute('data-attr');
+                if(attr && attr == 'next'){
+                    var cloning = ul.firstElementChild,
+                        cloned = cloning.cloneNode(true);
+                    createStyle('left', -200, ul);
+                    ul.appendChild(cloned);
+                } else if(attr && attr == 'prev') {
+                    var cloning = ul.lastElementChild,
+                        cloned = cloning.cloneNode(true);
+                    createStyle('left', 200, ul);
+                    ul.insertBefore(cloned, ul.firstElementChild);
+                };
+                ul.removeChild(cloning);
+                createStyle('left', 0, ul);
             };
+
             function createStyle(prop, args, el){
-                el.style.cssText += prop + ": " + args + "px";
+                el.style.cssText += prop + ": " + (args) + "px";
             };
     </script>
 </body>

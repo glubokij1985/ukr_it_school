@@ -8,12 +8,25 @@
           var menu = document.getElementById('menu');
 
           menu.addEventListener ("click",  function(e) {
+<<<<<<< HEAD
             var href = this.getAttribute('href');
             console.log(this);
             alert(href);
 
             e.preventDefault();
             return false // отменить переход по ссылке
+=======
+            // var target = event && event.target || event.srcElement;
+            // if(target.getAttribute('href')){
+              // var href = target.getAttribute('href');
+              var href = this.getAttribute('href');
+              console.log(this);
+              alert(href);
+
+              e.preventDefault();
+              return false // отменить переход по ссылке
+            // }              
+>>>>>>> b4da01b6065d1aef39cf1136da4e17f85e79b8be
           });
       };
     </script>
