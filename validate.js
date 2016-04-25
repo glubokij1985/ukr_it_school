@@ -4,7 +4,7 @@ else if(window.attachEvent) window.attachEvent('load', init);
 function init(){
     form1.username.onchange = nameOnChange;
     form1.email.onchange = emailOnChange;
-    form1.tel.oncange = telOnChange;
+    form1.tel.onchange = telOnChange;
     form1.onsubmit = formOnSubmit;
 };
 
@@ -28,7 +28,7 @@ function emailOnChange(){
 };
 
 function telOnChange(){
-    var pattern = /\d{10}/;
+    var pattern = /[0-9]{10}/;
     validate(this, pattern);
 };
 
