@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<style>
+		.slide, .slider-list, .img-slide{
+			display: table;
+			margin: 0 auto;
+		}
+
+		.img-slide img{
+			width: 400px;
+		}
+
+		.slider-list img{
+			width:200px;
+			height: 200px;
+			margin: 5px;
+		}
+		.-active{
+			opacity: .5
+		}
+	</style>
+
+	<div class="slide">
+		<div class="img-slide">
+			
+		</div>
+		<div class="slider-list">
+			<img src="./images/1.png" alt="">
+			<img src="./images/2.png" alt="">
+			<img src="./images/4.png" alt="">
+			<img src="./images/3.jpg" alt="">
+		</div>
+	</div>
+
+	<script>
+		(function(slider) {
+			
+			if(!slider) return;
+
+			
+				var containerImg = document.querySelector('.img-slide'),
+					sliderList = document.querySelector('.slider-list'),
+					count = sliderList.children.length,
+					width = parseInt(window.getComputedStyle(sliderList.firstElementChild).getPropertyValue('width')),
+					activeClass = '-active';
+
+				function cssGenerator(props, val, el) {
+					el.style.cssText += props+':'+(val)+'px';
+				}
+
+				function addListener() {
+					sliderList.addEventListener('click', handler);
+				}
+
+				function firstElementInit(){
+					var first = sliderList.firstElementChild,
+						src = first.src ? first.src : "";
+					containerImg.insertAdjacentHTML('afterBegin', '<img src="'+src+'" />');
+					first.classList.add(activeClass);
+				}
+
+				function handler() {
+					var target = event && event.target,
+						src = target.src ? target.src : "";
+
+					removeClass();
+					containerImg.firstElementChild.src = src;
+					target.classList.add(activeClass);
+
+				}
+
+				function removeClass(){
+					var active = document.querySelector('.-active');
+					active.classList.remove('-active');
+				}
+
+				function init() {
+					firstElementInit();
+					cssGenerator('width', (width+10)*count, sliderList);
+					addListener();
+				}
+			
+			init();
+
+		}(document.querySelector('.slide')))
+	</script>
+</body>
+</html>
