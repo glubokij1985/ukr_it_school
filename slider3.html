@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Slider2</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #big{
+        	width: 300px;
+            height: 300px;
+        }
+        #big > img{
+        	width: 100%;
+        	height: 100%;
+        }
+        #slider:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        #slider > img{
+            width: 100px;
+            height: 100px;
+            float: left;
+            cursor: pointer;
+        }
+        #slider > img.active{
+            opacity: .75;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+    	<div id="big"></div>
+        <div id="slider">
+            <img src="img1.jpg">
+            <img src="img2.jpg">
+            <img src="img3.jpg">
+        </div>
+    </div>
+    <script type="text/javascript">
+    	window.addEventListener('load', function(){
+    		var bigDiv = document.getElementById('big'),
+    		  	slider = document.getElementById('slider'),
+    		  	img = slider.firstElementChild;
+
+    		(function(){
+    			createBigImg();
+    			clickOnImg();    			
+    		}());
+
+    		function createBigImg(){
+	    		var firstSrc = img.getAttribute('src');
+	    			bigImg = bigDiv.insertAdjacentHTML('afterBegin', '<img src="' + firstSrc + '">');
+	    		img.classList.add('active');
+    		};
+
+    		function clickOnImg(){
+    			slider.addEventListener('click', handlerOnImg);    			
+    		};
+
+			function handlerOnImg(e){
+				var target = e && e.target || e.srcElement;
+
+				removeActive();
+
+				target.classList.add('active');
+				var targetSrc = target.getAttribute('src');
+ 				bigDiv.firstElementChild.setAttribute('src', targetSrc);
+			};
+    		function removeActive(){
+    			var el = document.querySelector('.active');
+    			el.classList.remove('active');
+    		};
+    	});
+    </script>
+</body>
+</html>
