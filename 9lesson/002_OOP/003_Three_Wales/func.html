@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function Site(){
+			this.names = "Site";
+		}
+
+		Site.prototype.name = "Siteetsss";
+
+		Site.prototype.getNames = function(){
+			console.log('this.names in method construcrot Site')
+			return this.names;
+		}
+
+		function Modals(){
+			this.last = "Modals";
+		}
+
+		Modals.prototype = Object.create(Site.prototype);
+		Modals.prototype.constructor = Modals;
+
+		Modals.prototype.inherit = function(){
+			console.log(this);
+			console.log(this.names);
+			console.log(this.getNames());
+			console.log(this.name);
+		}
+		
+		var modals = new Modals();
+			modals.inherit();
+		
+	</script>
+</body>
+</html>
