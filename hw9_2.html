@@ -7,72 +7,47 @@
 </head>
 <body>
     <script>
-    function Man () {
-        this.walk = function () {
-            document.write("i can walk" + "<br />");
+        function Man(){
+            this.walk = function(){
+                document.write('I can walk' + '<br/>');
+            };
+            this.eat = function(){
+                document.write('I can eat' + '<br/>');
+            };
+            this.drink = function(){
+                document.write('I can drink' + '<br/>');
+            };
         };
-        this.eat = function () {
-            document.write("i can eat" + "<br />");
+
+        function Soldier(){
+            this.shoot = function(){
+                document.write('I can shoot' + '<br/>');
+            };
         };
-        this.drink = function () {
-            document.write("i can drink" + "<br />")
+
+        function Doctor(){
+            this.cure = function(){
+                document.write('I can cure' + '<br/>');
+            };
         };
-    };
 
-    function Doctor () {
-        this.cure = function () {
-            document.write("i can cure" + "<br />");
-        };
-    };
+        var newMan = new Man();
 
-    function Soldier () {
-        this.shoot = function () {
-            document.write("i can shoot" + "<br />");
-        };
-    };
+        Soldier.prototype = newMan;
+        Doctor.prototype = newMan;
 
-    var newMan = new Man();
+        var sold = new Soldier();
+        var doc = new Doctor();
 
-    Doctor.prototype = newMan;
-    Soldier.prototype = newMan;
-
-    var newDoctor = new Doctor();
-    var newSoldier = new Soldier();
-
-
-    newSoldier.walk();
-    newSoldier.eat();
-    newSoldier.drink();
-    newSoldier.shoot();
-    document.write("<br />");
-    newDoctor.walk();
-    newDoctor.eat();
-    newDoctor.drink();
-    newDoctor.cure();
-
-    function Dentist () {
-        this.cure = function () {
-            document.write("i can only cure your teeth" + "<br />");
-        };
-    };
-
-    function Surgeon () {
-        this.cure = function () {
-            document.write("i can only do the surgery" + "<br />");
-        };
-    };
-
-
-    var newDentist = new Dentist();
-    var newSurgeon = new Surgeon();
-
-    Dentist.prototype = newDoctor;
-    Surgeon.prototype = newSurgeon;
-
-    document.write("<br />");
-    newDentist.cure();
-    newSurgeon.cure();
-
+        sold.walk();
+        sold.eat();
+        sold.drink();
+        sold.shoot();
+        document.write('<br/>');
+        doc.walk();
+        doc.eat();
+        doc.drink();
+        doc.cure();
     </script>
 </body>
 </html>
