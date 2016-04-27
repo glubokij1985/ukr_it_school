@@ -7,7 +7,10 @@
 </head>
 <body>
     <script>
-        function Man(){
+
+// ================ НАСЛЕДОВАНИЕ ===================
+
+        function Man(){ // создали класс с публичными методами
             this.walk = function(){
                 document.write('I can walk' + '<br/>');
             };
@@ -19,25 +22,25 @@
             };
         };
 
-        function Soldier(){
+        function Soldier(){ // создали дочерний класс
             this.shoot = function(){
                 document.write('I can shoot' + '<br/>');
             };
         };
 
-        function Doctor(){
+        function Doctor(){ // создали дочерний класс
             this.cure = function(){
                 document.write('I can cure' + '<br/>');
             };
         };
 
-        var newMan = new Man();
+        var newMan = new Man(); // создали объект класса Man
 
-        Soldier.prototype = newMan;
-        Doctor.prototype = newMan;
+        Soldier.prototype = newMan; // объявили объект newMan прототипом Soldier'а
+        Doctor.prototype = newMan; // объявили объект newMan прототипом Doctor'а
 
-        var sold = new Soldier();
-        var doc = new Doctor();
+        var sold = new Soldier(); // создали объект солдат
+        var doc = new Doctor(); // создали объект доктор
 
         sold.walk();
         sold.eat();
@@ -48,6 +51,34 @@
         doc.eat();
         doc.drink();
         doc.cure();
+
+
+// ================ ПОЛИМОРФИЗМ ===================
+
+
+        function Dentist(){
+            this.cure = function(){
+                document.write('I can only cure your teeth' + '<br/>');
+            };
+        };
+
+        function Surgeon(){
+            this.cure = function(){
+                document.write('I can only do the surgery' + '<br/>');
+            };
+        };
+
+        var dent = new Dentist();
+        var surg = new Surgeon();
+
+        dent.prototype = new Doctor(); // здесь по-другому, не так как в решении готовом,
+        surg.prototype = new Doctor(); // но работает
+        // Dentist.prototype = newDoctor;
+        // Surgeon.prototype = newSurgeon;
+
+        document.write('<br/>');
+        dent.cure();
+        surg.cure();
     </script>
 </body>
 </html>
