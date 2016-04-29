@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Slider2</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #big{
+        	width: 300px;
+            height: 300px;
+        }
+        #big > img{
+        	width: 100%;
+        	height: 100%;
+        }
+        #slider:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        #slider{
+            position: relative;
+        }
+        #slider > img{
+            width: 100px;
+            height: 100px;
+            float: left;
+            cursor: pointer;
+        }
+        #slider > img.active{
+            opacity: .75;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+    	<div id="big"></div>
+        <div id="slider-outer">
+            <div id="slider">
+                <img src="img1.jpg">
+                <img src="img2.jpg">
+                <img src="img3.jpg">
+                <img src="img2.jpg">
+            </div>
+        </div>
+        <button>next</button>
+    </div>
+    <script type="text/javascript">
+    	window.addEventListener('load', function(){
+
+            function Slide(el, len){
+                this.len = len;
+                this.outer = el;
+                this.bigDiv = document.getElementById('big');
+                this.slider = document.getElementById('slider');
+                this.img = slider.firstElementChild;
+                this.imgAll = slider.children;
+                this.next = document.querySelector('button');
+                this.createBigImg();
+                this.clickOnImg();
+                this.moveNext();
+            };
+
+            Slide.prototype.createBigImg = function(){
+                var firstSrc = this.img.getAttribute('src');
+                    bigImg = this.bigDiv.insertAdjacentHTML('afterBegin', '<img src="' + firstSrc + '">');
+                this.img.classList.add('active');
+                for(var i = 0; i < this.len; i++){
+                    this.imgAll[i].classList.add('viewport');
+                }
+            };
+
+            Slide.prototype.moveNext = function(){
+                var self = this;
+                self.next.addEventListener('click', function(){
+                    for(var i = 0; i < self.imgAll.length; i++){
+                        if(self.imgAll[i].classList.contains('active').nextElementSibling[i].classList.contains('viewport')){
+                            self.slider.style.left = -200 + 'px';
+                        }
+                    }
+                        
+                });                
+            };
+
+            Slide.prototype.clickOnImg = function(){
+                var self = this;
+                slider.addEventListener('click', function(e){ // или slider.addEventListener('click', this.handlerOnImg.bind(this)); тогда не нужна строка var self = this; а function handlerOnImg(e){...} выносим внизу
+                    var target = e && e.target || e.srcElement;
+
+                    self.removeActive();
+
+                    target.classList.add('active');
+                    var targetSrc = target.getAttribute('src');
+                    self.bigDiv.firstElementChild.setAttribute('src', targetSrc);
+                });             
+            };
+
+            Slide.prototype.removeActive = function (){
+                var elActive = document.querySelector('.active');
+                elActive.classList.remove('active');
+            };
+
+            new Slide(document.getElementById('slider-outer'), 3);
+    	});
+    </script>
+</body>
+</html>
