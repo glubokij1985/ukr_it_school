@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Slider2</title>
+    <title>Slider4</title>
     <style>
         *{
             margin: 0;
@@ -31,7 +31,11 @@
             cursor: pointer;
         }
         #slider > img.active{
-            opacity: .75;
+            opacity: .5;
+        }
+        #slider-outer{
+            width: 300px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -43,7 +47,7 @@
                 <img src="img1.jpg">
                 <img src="img2.jpg">
                 <img src="img3.jpg">
-                <img src="img2.jpg">
+                <img src="img4.jpg">
             </div>
         </div>
         <button>next</button>
@@ -70,20 +74,41 @@
                 this.img.classList.add('active');
                 for(var i = 0; i < this.len; i++){
                     this.imgAll[i].classList.add('viewport');
-                }
+                };
+                this.slider.style.width = this.imgAll.length * document.querySelector('img.viewport').clientWidth + 'px';
             };
 
             Slide.prototype.moveNext = function(){
                 var self = this;
                 self.next.addEventListener('click', function(){
-                    for(var i = 0; i < self.imgAll.length; i++){
-                        if(self.imgAll[i].classList.contains('active').nextElementSibling[i].classList.contains('viewport')){
-                            self.slider.style.left = -200 + 'px';
-                        }
-                    }
+                    var active = document.querySelector('.active');
+                    if(active.nextElementSibling.classList.contains('viewport')){
+
+                        self.addActiveClass();
                         
+                        // self.slider.style.left = -100 + 'px';
+                    } else {
+                        var cloning = document.querySelector('.viewport'),
+                            cloned = cloning.cloneNode(true);
+                        self.slider.appendChild(cloned).classList.remove('viewport');
+                        self.slider.removeChild(cloning);
+                        for(var i = 0; i < self.len; i++){
+                            self.imgAll[i].classList.add('viewport');
+                        };
+
+                        self.addActiveClass();
+                    }
                 });                
             };
+
+            Slide.prototype.addActiveClass = function(){
+                var active = document.querySelector('.active');
+                active.nextElementSibling.classList.add('active');
+                this.removeActive();
+                var activeCurrent = document.querySelector('.active'),
+                    activeSrc = activeCurrent.getAttribute('src');
+                this.bigDiv.firstElementChild.setAttribute('src', activeSrc);
+            }
 
             Slide.prototype.clickOnImg = function(){
                 var self = this;
