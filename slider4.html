@@ -60,22 +60,24 @@
                 this.outer = el;
                 this.bigDiv = document.getElementById('big');
                 this.slider = document.getElementById('slider');
-                this.img = slider.firstElementChild;
-                this.imgAll = slider.children;
+                this.img = this.slider.firstElementChild; // здесь нужно указывать this?
+                this.imgAll = this.slider.children; // здесь нужно указывать this?
+                this.imgAllCount = this.imgAll.length; // здесь нужно указывать this?
                 this.next = document.querySelector('button');
+                this.imgWidth = this.img.clientWidth;
                 this.createBigImg();
                 this.clickOnImg();
                 this.moveNext();
             };
 
             Slide.prototype.createBigImg = function(){
-                var firstSrc = this.img.getAttribute('src');
+                var firstSrc = this.img.getAttribute('src'),
                     bigImg = this.bigDiv.insertAdjacentHTML('afterBegin', '<img src="' + firstSrc + '">');
                 this.img.classList.add('active');
                 for(var i = 0; i < this.len; i++){
                     this.imgAll[i].classList.add('viewport');
                 };
-                this.slider.style.width = this.imgAll.length * document.querySelector('img.viewport').clientWidth + 'px';
+                this.slider.style.width = this.imgAllCount * this.imgWidth + 'px';
             };
 
             Slide.prototype.moveNext = function(){
@@ -92,9 +94,8 @@
                             cloned = cloning.cloneNode(true);
                         self.slider.appendChild(cloned).classList.remove('viewport');
                         self.slider.removeChild(cloning);
-                        for(var i = 0; i < self.len; i++){
-                            self.imgAll[i].classList.add('viewport');
-                        };
+
+                        active.nextElementSibling.classList.add('viewport');
 
                         self.addActiveClass();
                     }
