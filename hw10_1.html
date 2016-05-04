@@ -4,11 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Homework - cookie</title>
-    <script>
-        
-    </script>
 </head>
 <body>
+	<button>Выход</button>
 
+	<script>
+        var admin = 'Admin',
+        	login = prompt('Введите имя пользователя:'),
+        	createP = document.createElement('p'),
+        	p = document.body.appendChild(createP);
+
+        if(login == admin){
+        	p.innerHTML = 'Пользоваетль ' + login + ' вошел в систему!';
+        }
+    </script>
 </body>
 </html>
