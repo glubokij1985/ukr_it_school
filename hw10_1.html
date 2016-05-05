@@ -9,14 +9,58 @@
 	<button>Выход</button>
 
 	<script>
-        var admin = 'Admin',
-        	login = prompt('Введите имя пользователя:'),
-        	createP = document.createElement('p'),
-        	p = document.body.appendChild(createP);
+        var cookieLogin = 'login';
 
-        if(login == admin){
-        	p.innerHTML = 'Пользоваетль ' + login + ' вошел в систему!';
-        }
+        if(getCookie(cookieLogin) == 'Admin' || getCookie(cookieLogin) == 'admin'){
+            showPage();
+        } else {
+            inputLogin();
+        };
+
+        function getCookie(nameCookie){
+            var name = nameCookie + "=";
+            var cookieArray = document.cookie.split(';');
+            for (var i = 0; i < cookieArray.length; i++) {
+                var cookieValue = cookieArray[i];
+                while (cookieValue.charAt(0)==' ') {
+                    cookieValue = cookieValue.substring(1);
+                };
+                if (cookieValue.indexOf(name) != -1) {
+                    return cookieValue.substring(name.length,cookieValue.length);
+                }
+            };
+            return "";
+        };
+
+        function inputLogin(){
+            var loginValue = prompt('Введите имя пользователя:'),
+                timeCookie = 'max-age=120';
+            if(loginValue == 'Admin' || loginValue == 'admin'){
+                setCookie(loginValue, timeCookie);
+                showPage();
+            } else {
+                inputLogin();
+            }
+        };
+
+        function setCookie(login, timeCookie){
+            var cookieLogin = 'login=' + login + '; ';
+            document.cookie = cookieLogin + timeCookie;
+        };
+
+        function showPage(){
+            var userName = getCookie(nameCookie);
+            document.write('Пользователь ' + nameCookie + ' вошел в систему!');
+            document.body.insertAdjacentHTML('beforeEnd', '<br/><button id="logout">Выход</button>');
+        };
+
+        var btn = document.getElementById('logout');
+        btn.addEventListener('click', logOut);
+
+        function logOut(){
+            document.cookie = '';
+            window.location.reload();
+        };
     </script>
 </body>
 </html>
