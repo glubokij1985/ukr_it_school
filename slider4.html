@@ -70,48 +70,48 @@
                 this.moveNext();
             };
 
-            Slide.prototype.createBigImg = function(){
+            Slide.prototype.createBigImg = function(){ // создаем большую img при загрузке страницы
                 var firstSrc = this.img.getAttribute('src'),
                     bigImg = this.bigDiv.insertAdjacentHTML('afterBegin', '<img src="' + firstSrc + '">');
                 this.img.classList.add('active');
                 for(var i = 0; i < this.len; i++){
                     this.imgAll[i].classList.add('viewport');
                 };
-                this.slider.style.width = this.imgAllCount * this.imgWidth + 'px';
+                this.slider.style.width = this.imgAllCount * this.imgWidth + 'px'; // задаем ширину div, которая оборачивает все маленькие img
             };
 
-            Slide.prototype.moveNext = function(){
-                var self = this;
+            Slide.prototype.moveNext = function(){ // клик по кнопке next
+                var self = this; // переопределяем this в переменную self
                 self.next.addEventListener('click', function(){
                     var active = document.querySelector('.active');
-                    if(active.nextElementSibling.classList.contains('viewport')){
+                    if(active.nextElementSibling.classList.contains('viewport')){ // если следующая img после активной имеет класс viewport - вешаем ей класс active, а у текущей удаляем (это делает функция addActiveClass())
 
                         self.addActiveClass();
                         
                         // self.slider.style.left = -100 + 'px';
                     } else {
-                        var cloning = document.querySelector('.viewport'),
+                        var cloning = document.querySelector('.viewport'), // клонируем первую img
                             cloned = cloning.cloneNode(true);
-                        self.slider.appendChild(cloned).classList.remove('viewport');
-                        self.slider.removeChild(cloning);
+                        self.slider.appendChild(cloned).classList.remove('viewport'); // вставляем склонированную img в конец всех img
+                        self.slider.removeChild(cloning); // удаляем первую img
 
-                        active.nextElementSibling.classList.add('viewport');
+                        active.nextElementSibling.classList.add('viewport'); // вешаем класс viewport следующей img после текущей(активной)
 
-                        self.addActiveClass();
+                        self.addActiveClass(); // даем ей (img) класс active
                     }
                 });                
             };
 
             Slide.prototype.addActiveClass = function(){
-                var active = document.querySelector('.active');
-                active.nextElementSibling.classList.add('active');
-                this.removeActive();
-                var activeCurrent = document.querySelector('.active'),
-                    activeSrc = activeCurrent.getAttribute('src');
-                this.bigDiv.firstElementChild.setAttribute('src', activeSrc);
+                var active = document.querySelector('.active'); // ищем первый img с классом active
+                active.nextElementSibling.classList.add('active'); // вешаем следующему после активного img класс active
+                this.removeActive(); // а у текущего удаляем класс active
+                var activeCurrent = document.querySelector('.active'), // теперь объявляем в переменную теперь уже текущий активный img
+                    activeSrc = activeCurrent.getAttribute('src'); // берем у него src
+                this.bigDiv.firstElementChild.setAttribute('src', activeSrc); // и этот src даем большому img
             }
 
-            Slide.prototype.clickOnImg = function(){
+            Slide.prototype.clickOnImg = function(){ // клик на маленьком img
                 var self = this;
                 slider.addEventListener('click', function(e){ // или slider.addEventListener('click', this.handlerOnImg.bind(this)); тогда не нужна строка var self = this; а function handlerOnImg(e){...} выносим внизу
                     var target = e && e.target || e.srcElement;
@@ -124,7 +124,7 @@
                 });             
             };
 
-            Slide.prototype.removeActive = function (){
+            Slide.prototype.removeActive = function (){ // удаляем класс active
                 var elActive = document.querySelector('.active');
                 elActive.classList.remove('active');
             };
