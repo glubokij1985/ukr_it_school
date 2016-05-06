@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+    <style>
+        #move-div {
+            height: 50px;
+            display: inline-block;
+            position: relative;
+            left: 0px;
+            overflow: hidden;
+
+        }
+        #move-div div{
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .outer{
+            width: 500px;
+            overflow: hidden;
+            position: relative;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <div id="move-div">
+            <div>asd aopsi djasiopd</div>
+            <div>123123123123</div>
+            <div>123123123123</div>
+            <div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div><div>123123123123</div>        <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div>
+            <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div>
+            <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div>
+            <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div>
+            <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div> <div>asd aopsi djasiopd</div><div>asd aopsi djasiopd</div><div>asd aopsi djasiopd</div><div>asd aopsi djasiopd</div>
+            <div>asd aopsi123123123 djasiopd</div>
+        </div>
+    </div>
+    <button id="stop-button">stop</button>
+
+    <script type="text/javascript">
+        var div = document.getElementById('move-div'),
+            btnStop = document.getElementById('stop-button'),
+            left = 0,
+            moveInterval;
+
+        div.addEventListener('click', move);
+        btnStop.addEventListener('click', stop);
+
+        var child  = document.querySelectorAll('#move-div > div');
+        var allwidth = child[child.length-1].clientWidth;
+        for(var i = 0; i<child.length;++i){
+            if(i == child.length-1){
+                console.log(child[i]);
+            }
+            allwidth += child[i].clientWidth;
+        }
+        div.style.width = allwidth+'px';
+        function move(){
+            moveInterval = setInterval(function(){
+                var leftPos = div.style.left = left + 'px';
+                left -= 1;
+
+                // var divWidth = getComputedStyle(div).width,
+                //     windowWidth = document.documentElement.clientWidth;
+                // if(parseInt(leftPos) + parseInt(divWidth) >= windowWidth){
+                //     left = 0;
+                //     console.log(left);
+                //     stop();
+                // }
+
+                var divWidth = div.clientWidth,
+                    windowWidth = document.body.clientWidth;
+                if(left < 0-divWidth){
+                    left = windowWidth;
+                }
+
+            }, 10);
+        };
+
+        function stop(){
+            clearInterval(moveInterval);
+        };
+    </script>
+</body>
+</html>
