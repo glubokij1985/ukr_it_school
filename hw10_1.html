@@ -6,8 +6,6 @@
     <title>Homework - cookie</title>
 </head>
 <body>
-	<button>Выход</button>
-
 	<script>
         var cookieLogin = 'login';
 
@@ -49,8 +47,8 @@
         };
 
         function showPage(){
-            var userName = getCookie(nameCookie);
-            document.write('Пользователь ' + nameCookie + ' вошел в систему!');
+            var userName = getCookie(cookieLogin);
+            document.write('Пользователь ' + userName + ' вошел в систему!');
             document.body.insertAdjacentHTML('beforeEnd', '<br/><button id="logout">Выход</button>');
         };
 
@@ -58,8 +56,12 @@
         btn.addEventListener('click', logOut);
 
         function logOut(){
-            document.cookie = '';
+            delCookie(cookieLogin);
             window.location.reload();
+        };
+
+        function delCookie(delCookieName){
+            document.cookie = delCookieName + '=' + getCookie(cookieLogin) + '; max-age=0;';
         };
     </script>
 </body>
