@@ -18,16 +18,17 @@
                 }
             };
 
-            function searchProp(obj, prop){
+            var a = function searchProp(obj, prop){
                 for(var key in obj){
                     if(key == prop) {
-                        console.log('Свойство ' + key + ' со значением ' + obj[key]);                        
+                        return 'Свойство ' + key + ' со значением ' + obj[key];                        
                     } else if(typeof obj[key] == 'object'){
                         searchProp(obj[key], prop);
                     }
                 };
             };
-            searchProp(one, 'seven');
+            a(one, 'seven');
+            console.log(a);
     	});
     </script>
 </body>

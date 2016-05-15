@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework_Recursion</title>
+    <script>
+        window.addEventListener('load', function() {
+
+            var numbers = {
+                one: 1,
+                two: 2,
+                three: 3,
+                objProp : {
+                    four: 4,
+                    five: 5,
+                    objProp2 : {
+                        six: 6,
+                        seven: 7,
+                        objProp3: {
+                            eight: 8,
+                            nine: 9,
+                            ten: 10,
+                            eleven: 11,
+                            objProp4: {
+                                twelve: 12
+                            }
+                        }
+                    }
+                },
+                prop: true
+            };
+
+            function getProp(obj, callback) {
+                for(var key in obj) {
+
+                    console.log(key + ': ' + obj[key] );
+
+                    if(key == 'twelve') {
+                        callback(obj[key]);
+                    };
+
+                    if( typeof obj[key] == 'object') {
+                        getProp(obj[key], callback);
+                    };
+                };
+            };
+
+            getProp(numbers, function(val) {
+                alert('Значение свойства twelve = ' + val);
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
