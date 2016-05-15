@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RadialGradient</title>
+    <script type="text/javascript">
+        function draw() {
+
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+
+            // Создание радиального градиента.
+            var gradient = context.createRadialGradient(150, 150, 100, 150, 150, 200);
+            gradient.addColorStop(0, "Orange");
+            gradient.addColorStop(1, "Black");
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, 300, 300);
+        }
+
+        if (window.addEventListener)
+            window.addEventListener("load", draw, true);
+    </script>
+</head>
+<body>
+    <canvas id="canvas" height="300" width="300" style="border: solid 1px black;">
+        Ваш браузер не поддерживает элемент <b>Canvas</b>
+    </canvas>
+</body>
+</html>

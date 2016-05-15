@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>search in object</title>
+</head>
+<body>
+    <script type="text/javascript">
+    	window.addEventListener('load', function(){
+            var one = {
+                two: 'Hello',
+                three: {
+                    four: 'World',
+                    five: {
+                        six: '!!!',
+                        seven: 7
+                    }
+                }
+            };
+
+            function searchProp(obj, prop){
+                for(var key in obj){
+                    if(key == prop) {
+                        console.log('Свойство ' + key + ' со значением ' + obj[key]);                        
+                    } else if(typeof obj[key] == 'object'){
+                        searchProp(obj[key], prop);
+                    }
+                };
+            };
+            searchProp(one, 'seven');
+    	});
+    </script>
+</body>
+</html>

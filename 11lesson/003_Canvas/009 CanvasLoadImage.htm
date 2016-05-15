@@ -1,0 +1,28 @@
+﻿<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>drawImage()</title>
+    <script type="text/javascript">
+        function draw() {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+
+            var logo = new Image();
+            logo.src = "logo.png";
+                        
+            logo.onload = function () {
+                context.drawImage(logo, 22, 22);       
+            }
+        }
+
+        if (window.addEventListener)
+            window.addEventListener("load", draw, true);
+    </script>
+</head>
+<body>
+    <canvas id="canvas" height="300" width="300" style="border: solid 1px black;">
+        Ваш браузер не поддерживает элемент <b>Canvas</b>
+    </canvas>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Работа с изображениями</title>
+    <script>
+        window.addEventListener("load", function () {
+            var img1 = document.getElementById("logo");  // получение по id.
+            var img2 = document.images.logoname;                // плохо
+            var img3 = document.images["logoname"];             // тоже плохо
+            var img4 = document.logoname;                       // все также плохо
+            var img5 = document.querySelector("[name='logoname']");
+            var img6 = document.querySelectorAll("[name='logoname']");
+            var img7 = document.images.namedItem("logoname");
+
+            alert(img1 + ", " + img2 + ", " + img3 + ", " + img4 + ", " + img5 + ", " + img6 + ", " + img7 );
+
+        });
+    </script>
+</head>
+<body>
+    <img id="logo" name="logoname" src="logo.png" alt="UIS" title="Учебный центр UIS" />
+    <br>
+    <img id="nextlogo" name="logoname" src="logo.png" alt="UIS" title="Учебный центр UIS" />
+</body>
+</html>
