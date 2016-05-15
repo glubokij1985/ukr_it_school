@@ -10,12 +10,51 @@
     <title>Homework</title>
     <script>
         window.addEventListener('load', function(){
-            
+            // 1.)
+            var img = document.getElementById('lamp');
+
+            img.addEventListener('mouseenter', lampOn);
+            img.addEventListener('mouseleave', lampOff);
+
+            function lampOn(){
+                if(this.src.match('bulbon')){
+                    this.src = 'pic_bulboff.gif';
+                } else {
+                    this.src = 'pic_bulbon.gif';
+                }
+            };
+
+            function lampOff(){
+                if(this.src.match('bulbon')){
+                    this.src = 'pic_bulboff.gif';
+                } else {
+                    this.src = 'pic_bulbon.gif';
+                }
+            };
+
+            // 2.)
+            var logo = new Image(100);
+            logo.src = 'logo.png';
+            document.body.appendChild(logo);
+
+            logo.addEventListener('click', logoBigSize);
+
+            function logoBigSize(){
+                window.open(logo.src, "Picture big", "width=500,height=200,resizable=yes,scrollbars=yes,status=yes");
+            };
+
+            // 3.)            
+            var allImages = document.images;
+            for(var i = 0; i < allImages.length; i++){
+                var altWrap = document.getElementById('images_alt');
+                var alt = document.getElementById('lamp').getAttribute('alt');
+                altWrap.innerHTML = alt;
+            }
         });
     </script>
 </head>
 <body>
-    <img src="logo.png" alt="logo" title="logo" id="logo">
+    <img src="pic_bulboff.gif" alt="lamp" title="lamp" id="lamp">
     <p id="images_alt">
         
     </p>
