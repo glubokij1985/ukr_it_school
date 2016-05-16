@@ -17,19 +17,25 @@
                     }
                 }
             };
+
             function searchProp(obj, prop, callback){
                 for(var key in obj){ // перебираем свойства в объекте
                     if(key == prop) { // если свойство равняется prop,
-                        callback(key, obj[key]); // вызываем каллбэк-функцию с двумя параметрами
+                        var c = callback(key, obj[key]); // вызываем каллбэк-функцию с двумя параметрами (в переменную с записано значение val)
+                        c += 3; // здесь мы используем далее значение val
+                        console.log(c); // выведет 10, т.к. с = 7
                     } else if(typeof obj[key] == 'object'){ // иначе если свойство является объектом,
                         searchProp(obj[key], prop, callback); // то рекурсивно вызываем нашу функцию (объектом теперь будет найденное свойство)
                     }
                 };
             };
-            var a = searchProp(one, 'seven', function(key, val){ // вызываем нашу функцию с каллбэком
-                console.log('Свойство ' + key + ' со значением ' + val + ' найдено!');
-            });
-            console.log(a);
+
+            function callBack(key, val){
+                return val;
+            };
+
+            searchProp(one, 'seven', callBack); // вызываем нашу функцию с каллбэком
+
     	});
     </script>
 </body>
