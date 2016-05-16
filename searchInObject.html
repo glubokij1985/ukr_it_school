@@ -26,10 +26,9 @@
                     }
                 };
             };
-            var a = searchProp(one, 'seven', function(key, val){ // вызываем нашу функцию с каллбэком
+            searchProp(one, 'seven', function(key, val){ // вызываем нашу функцию с каллбэком
                 console.log('Свойство ' + key + ' со значением ' + val + ' найдено!');
             });
-            console.log(a);
     	});
     </script>
 </body>
