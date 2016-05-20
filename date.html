@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>date</title>
+</head>
+<body>
+    <script>
+        function Helper(){};
+
+        Helper.prototype.today = function(){
+            var date = new Date(),
+                current = new Date(date.getFullYear(), date.getMonth(), date.getDate()).valueOf();
+            return current;
+        };
+
+        Helper.prototype.getMounth = function(mounth, lang){            
+            var mounthObject = {
+                ru: {
+                    1: 'Января',
+                    2: 'Февраля',
+                    3: 'Марта',
+                    4: 'Апреля',
+                    5: 'Мая',
+                    6: 'Июня',
+                    7: 'Июля',
+                    8: 'Августа',
+                    9: 'Сентября',
+                    10: 'Октября',
+                    11: 'Ноября',
+                    12: 'Декабря'
+                },
+                uk: {
+                    1: "Січня",
+                    2: "Лютого",
+                    3: "Березня",
+                    4: "Квітня",
+                    5: "Травня",
+                    6: "Червня",
+                    7: "Липня",
+                    8: "Серпня",
+                    9: "Вересня",
+                    10: "Жовтня",
+                    11: "Листопада",
+                    12: "Грудня"
+                }
+            };            
+            return mounthObject[lang][mounth];
+        };
+
+        Helper.prototype.compareDate = function(date){
+            var onlyDate = date.split(' ')[0],
+                onlyTime = date.split(' ')[1],
+                curDate = new Date(onlyDate),
+                currentDate = new Date(curDate.getFullYear(), curDate.getMonth(), curDate.getDate()).valueOf(),
+                now = this.today();
+            if(now > currentDate){
+                console.log(curDate.getDay() + ' ' + this.getMounth(curDate.getMonth(), 'uk') + ' ' + curDate.getFullYear());
+            } else {
+                console.log(onlyTime);
+            }
+        };
+
+        var help = new Helper();
+
+        help.compareDate('2016-05-19 11:15:20');
+    </script>
+</body>
+</html>
