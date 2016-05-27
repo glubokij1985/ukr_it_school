@@ -3,13 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>slidernews</title>
+    <style type="text/css">
+	    .pagin span{
+	    	width: 10px;
+	    	height: 10px;
+	    	margin: 0 5px;
+	    	border-radius: 50%;
+	    	background: green;
+	    	display: inline-block;
+	    	cursor: pointer;
+	    }
+    </style>
 </head>
 <body>
-    <div class="source" data-frame="http://4side.in.ua/,http://4side.in.ua/">
+	<div id="outer">
+		<ul class="slider">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+		<div class="pagin">
+			
+		</div>
+	</div>
+		
+    <script> 
+	    function Slider(elem){
+    		if(!elem) return;
 
-    </div>
-    <script>        
-        
+    		this.arrLi = document.querySelectorAll('.slider li');
+    		this.liCount = this.arrLi.length;  
+    		this.pagin = document.querySelector('.pagin');	
+    		var str = '';
+
+    		for(var i = 0; i < this.liCount; i++){
+    			this.arrLi[i].setAttribute('data-slide', i);
+    			str += this.setDataContr(this.arrLi[i].getAttribute('data-slide'));
+    		};
+
+    		this.pagin.insertAdjacentHTML('afterBegin', str);
+    	};
+
+    	Slider.prototype.setDataContr = function(dataAttr){
+    		var paginator = '<span data-controls="' + dataAttr + '"></span>';
+    		return paginator;
+    	};
+
+        window.addEventListener('DOMContentLoaded', function(){
+        	var newSlider = new Slider(document.getElementById('outer'));
+        });
     </script>
 </body>
 </html>
