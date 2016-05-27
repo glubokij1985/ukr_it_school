@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>index2</title>
+</head>
+<body>
+    <div class="source" data-frame="http://4side.in.ua/,http://4side.in.ua/">
+
+    </div>
+    <script>        
+        function Iframe(elem){ // создаем класс
+            if(!elem) return;
+
+            var src = elem.getAttribute('data-frame'),                
+                arrSrc = src.split(','),
+                str = ''; // объявляем переменную - пустую строку
+
+            for(var i = 0; i < arrSrc.length; i++){
+                str += this.template(arrSrc[i]); // записываем в строку html наших iframe
+            };
+
+            elem.insertAdjacentHTML('beforeEnd', str); // вставляем в документ сразу все наши iframe
+        };
+
+        Iframe.prototype.template = function(srcLink){
+            var temp = '<div class="val-outer-frame">' + 
+                            '<span class="val-ico-online">' + 
+                                '<i>Online iframe</i>' + 
+                            '</span>' + 
+                            '<iframe src="' + srcLink + '"></iframe>' + 
+                        '</div>';
+            return temp; // этот метод создает html для будущих iframe
+        };
+
+        window.addEventListener('DOMContentLoaded', function(){
+            var newIframe = new Iframe(document.querySelector('.source')); // вызываем наш класс
+        });
+        
+    </script>
+</body>
+</html>
