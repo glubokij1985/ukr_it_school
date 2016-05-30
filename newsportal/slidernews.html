@@ -93,8 +93,6 @@
 	    			if(targetDataAttr == self.arrLi[i].getAttribute('data-slide')){
 	    				if(targetDataAttr > dataAttrActive){
 	    					deltaX = ulCoord - (targetDataAttr - dataAttrActive) * self.liWidth;
-	    				} else if(targetDataAttr == dataAttrActive){
-	    					deltaX = 0;
 	    				} else {
 	    					deltaX = ulCoord + (dataAttrActive - targetDataAttr) * self.liWidth;
 	    				};
