@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>slidernews</title>
+    <style type="text/css">
+		*{
+            margin: 0;
+            padding: 0;
+        }
+	    .pagin span{
+	    	width: 20px;
+	    	height: 20px;
+	    	margin: 0 5px;
+	    	border-radius: 50%;
+	    	background: green;
+	    	display: inline-block;
+	    	cursor: pointer;
+	    }
+	    .pagin span.active{
+			background: #ccc;
+	    }
+	    li{
+	    	float: left;
+	    	width: 300px;
+	    	height: 300px;
+	    	list-style-type: none;
+	    	font-size: 35px;
+	    	color: #fff;
+	    }
+	    #outer{
+	    	width: 300px;
+	    	height: 500px;
+	    	overflow: hidden;
+	    }
+	    .slider{
+	    	position: relative;
+	    	-webkit-transition: all .5s ease-in-out;
+	    	-moz-transition: all .5s ease-in-out;
+	    	-o-transition: all .5s ease-in-out;
+	    	-ms-transition: all .5s ease-in-out;
+	    	transition: all .5s ease-in-out;
+	    }
+	    .slider:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+	<div id="outer">
+		<ul class="slider">
+			<li style="background: red;">1</li>
+			<li style="background: green;">2</li>
+			<li style="background: blue;">3</li>
+			<li style="background: brown;">4</li>
+			<li style="background: orange;">5</li>
+		</ul>
+		<div class="pagin">
+			
+		</div>
+	</div>
+		
+    <script> 
+	    function Slider(elem){
+    		if(!elem) return; // если нет elem - выходим
+
+    		var self = this; // переопределяем this (для функции с кликом - moveSlide)
+
+    		this.arrLi = document.querySelectorAll('.slider li');
+    		this.liWidth = this.arrLi[0].clientWidth;
+    		this.liCount = this.arrLi.length;  
+    		this.pagin = document.querySelector('.pagin');    		
+    		this.ul = document.querySelector('.slider');
+    		this.ulWidth = this.liCount * this.liWidth;
+    		var str = ''; // объявляем пустую строку, чтоб потом в нее записать html для будущих пагинаторов
+
+    		for(var i = 0; i < this.liCount; i++){
+    			this.arrLi[i].setAttribute('data-slide', i);  // необязательно (это для li)
+    			str += this.setDataContr(this.arrLi[i].getAttribute('data-slide')); // формируем html для пагинаторов
+    		};
+
+    		self.moveSlide = function(event){ // функция для клика по пагинаторам
+	    		var target = event && event.target || event.srcElement,
+	    			targetDataAttr = target.getAttribute('data-controls'), // получаем аттрибут таргета
+	    			deltaX = 0; // объявляем переменную для смещения ul
+
+				if(targetDataAttr > self.paginBtnActiveAttr){ // проверка для определения стороны, в которую будет смещена ul
+					deltaX = -targetDataAttr * self.liWidth;
+				} else {
+					deltaX = targetDataAttr * self.liWidth;
+				};
+    			self.ul.style.transform = 'translateX(' + deltaX + 'px)'; // смещаем ul (плавно)
+    			self.paginBtnActive.classList.remove('active'); // удаляем класс active с активного пагинатора
+    			target.classList.add('active'); // вешаем класс active на таргет
+				self.paginBtnActive = document.querySelector('.pagin span.active'); // переопределяем активный пагинатор по клику
+    		};
+
+    		this.pagin.insertAdjacentHTML('afterBegin', str); // формируем пагинаторы
+    		this.paginBtn = document.querySelectorAll('.pagin span'); 
+    		this.paginBtn[0].classList.add('active'); // вешаем класс active при инициализации на первый пагинатор
+    		this.paginBtnActive = document.querySelector('.pagin span.active'); // определяем активный пагинатор при инициализации
+    		this.paginBtnActiveAttr = this.paginBtnActive.getAttribute('data-controls');
+    		this.createStyle('width', this.ulWidth, this.ul); // даем ширину ul при инициализации
+    		this.pagin.addEventListener('click', this.moveSlide); // вешаем обработчик на пагинаторы
+    	};
+
+    	Slider.prototype.setDataContr = function(dataAttr){ // формируем пагинаторы
+    		var paginator = '<span data-controls="' + dataAttr + '"></span>';
+    		this.arrLi[0].classList.add('active'); // необязательно (это для li)
+    		return paginator;
+    	};
+
+    	Slider.prototype.createStyle = function(prop, val, el){ // задаем стили
+    		el.style.cssText += prop + ':' + val + 'px';
+    	};
+
+        window.addEventListener('DOMContentLoaded', function(){
+        	var newSlider = new Slider(document.getElementById('outer')); // вызываем слайдер
+        });
+    </script>
+</body>
+</html>
