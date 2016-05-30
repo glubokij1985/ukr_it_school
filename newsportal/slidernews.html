@@ -4,25 +4,58 @@
     <meta charset="UTF-8">
     <title>slidernews</title>
     <style type="text/css">
+		*{
+            margin: 0;
+            padding: 0;
+        }
 	    .pagin span{
-	    	width: 10px;
-	    	height: 10px;
+	    	width: 20px;
+	    	height: 20px;
 	    	margin: 0 5px;
 	    	border-radius: 50%;
 	    	background: green;
 	    	display: inline-block;
 	    	cursor: pointer;
 	    }
+	    .pagin span.active{
+			background: #ccc;
+	    }
+	    li{
+	    	float: left;
+	    	width: 300px;
+	    	height: 300px;
+	    	list-style-type: none;
+	    	font-size: 35px;
+	    	color: #fff;
+	    }
+	    #outer{
+	    	width: 300px;
+	    	height: 500px;
+	    	overflow: hidden;
+	    }
+	    .slider{
+	    	position: relative;
+	    	-webkit-transition: all .5s ease-in-out;
+	    	-moz-transition: all .5s ease-in-out;
+	    	-o-transition: all .5s ease-in-out;
+	    	-ms-transition: all .5s ease-in-out;
+	    	transition: all .5s ease-in-out;
+	    }
+	    .slider:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
     </style>
 </head>
 <body>
 	<div id="outer">
 		<ul class="slider">
-			<li>1</li>
-			<li>2</li>
-			<li>3</li>
-			<li>4</li>
-			<li>5</li>
+			<li style="background: red;">1</li>
+			<li style="background: green;">2</li>
+			<li style="background: blue;">3</li>
+			<li style="background: brown;">4</li>
+			<li style="background: orange;">5</li>
 		</ul>
 		<div class="pagin">
 			
@@ -33,9 +66,14 @@
 	    function Slider(elem){
     		if(!elem) return;
 
+    		var self = this;
+
     		this.arrLi = document.querySelectorAll('.slider li');
+    		this.liWidth = this.arrLi[0].clientWidth;
     		this.liCount = this.arrLi.length;  
-    		this.pagin = document.querySelector('.pagin');	
+    		this.pagin = document.querySelector('.pagin');    		
+    		this.ul = document.querySelector('.slider');
+    		this.ulWidth = this.liCount * this.liWidth;
     		var str = '';
 
     		for(var i = 0; i < this.liCount; i++){
@@ -43,12 +81,49 @@
     			str += this.setDataContr(this.arrLi[i].getAttribute('data-slide'));
     		};
 
+    		self.moveSlide = function(event){
+	    		var target = event && event.target || event.srcElement,
+	    			targetDataAttr = target.getAttribute('data-controls'),
+	    			liActive = document.querySelector('.slider li.active'),
+	    			dataAttrActive = liActive.getAttribute('data-slide'),
+	    			ulCoord = self.ul.getBoundingClientRect().left,
+	    			deltaX = 0;
+
+	    		for(var i = 0; i < self.liCount; i++){
+	    			if(targetDataAttr == self.arrLi[i].getAttribute('data-slide')){
+	    				if(targetDataAttr > dataAttrActive){
+	    					deltaX = ulCoord - (targetDataAttr - dataAttrActive) * self.liWidth;
+	    				} else if(targetDataAttr == dataAttrActive){
+	    					deltaX = 0;
+	    				} else {
+	    					deltaX = ulCoord + (dataAttrActive - targetDataAttr) * self.liWidth;
+	    				};
+		    			self.ul.style.transform = 'translateX(' + deltaX + 'px)';
+		    			liActive.classList.remove('active');
+		    			self.arrLi[i].classList.add('active');
+		    			self.paginBtnActive.classList.remove('active');
+		    			target.classList.add('active');
+	    				self.paginBtnActive = document.querySelector('.pagin span.active');
+		    		}
+	    		};
+    		};
+
     		this.pagin.insertAdjacentHTML('afterBegin', str);
+    		this.paginBtn = document.querySelectorAll('.pagin span');
+    		this.paginBtn[0].classList.add('active');
+    		this.paginBtnActive = document.querySelector('.pagin span.active');
+    		this.createStyle('width', this.ulWidth, this.ul);
+    		this.pagin.addEventListener('click', this.moveSlide);
     	};
 
     	Slider.prototype.setDataContr = function(dataAttr){
     		var paginator = '<span data-controls="' + dataAttr + '"></span>';
+    		this.arrLi[0].classList.add('active');
     		return paginator;
+    	};
+
+    	Slider.prototype.createStyle = function(prop, val, el){
+    		el.style.cssText += prop + ':' + val + 'px';
     	};
 
         window.addEventListener('DOMContentLoaded', function(){
