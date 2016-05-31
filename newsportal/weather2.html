@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>weather</title>
+    
+</head>
+<body>
+		
+    <script>
+    	function Weather(){
+    		var self = this;
+    		// this.codeCurImgMin = '';
+    		var xhr = new XMLHttpRequest();
+
+    		this.xhrObject;
+    		
+        xhr.open('GET', 'https://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20woeid%3D918233%20and%20u%3D%22c%22&format=json&l=ru', true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                self.xhrObject = JSON.parse(xhr.responseText);
+                // console.log(self.xhrObject);
+                self.getItem(self.xhrObject, 'condition', self.callBack);
+                // console.log(val.code);
+  	            // self.getCurrentWeather(self.codeCurImgMin);
+  	            // console.log(self.codeCurImgMin);
+		        }
+        };
+        xhr.send();
+
+        this.callBack = function(key, val){
+          // console.log(val.code);
+            return val.code;
+        };
+
+        this.getItem = function(obj, prop, callback){
+          for(var key in obj){
+              if(key == prop) {
+                  callback(key, obj[key]);
+              } else if(typeof obj[key] == 'object'){
+                  self.getItem(obj[key], prop, callback);
+              }
+          };
+        };
+
+        this.getCurrentWeather();
+        // console.log(self.codeCurImgMin);
+	        
+    	};
+
+    	Weather.prototype.getCurrentWeather = function(cod){
+    		// console.log(cod);
+    		// console.log(self.codeCurImgMin);
+    		var curWeatherHTML = '<div class="drop-weather-button">' +
+              						'<div class="outer-today-ico">' +
+                  						'<span class="icons-for-c-min icon-weather-min-' + cod +'"></span>' +
+                  						// '<i class="today-weather">' + todayWeather + 'С°</i>' + 
+              						'</div>' +
+              						// '<div class="drop-wether">' +
+                  		// 				'<p class="for-genwether"><span class="title-weather">Погода</span><span class="city-weather">Украина, Чернигов</span></p>' +
+                  		// 				'<div class="section-today">' +
+                				// 			'<div class="for-weather-icon">' +
+                  		// 						'<h5 class="section-heading">Сьогодні</h5>' +
+                  		// 						'<span class="icons-for-c icon-weather-' + codeCurImg + '"></span>' +
+                				// 			'</div>' +
+              						// 		'<div class="weather-detail">' +
+                  		// 						'<h4 class="weather-heading">' +
+                    //   								'<span class="temp-now">' + currentWeather + 'С°</span>' +
+                    //   								'<span class="phrase">Температура зараз</span>' +
+                  		// 						'</h4>' +
+                  		// 						'<span class="temperature high-temperature">' + curTempMax + 'С°</span>' +
+                  		// 						'<span class="temperature low-temperature">' + curTempMin +'С°</span>' +
+                  		// 						'<p class="summary">' + weatherConditions + '</p>' +
+              						// 		'</div>' +
+                  		// 				'</div>' +
+                  		// 				'<div class="section-this-week">' +
+                    //   						'<h5 class="section-heading">Тиждень</h5>' +
+                    //   						'<ul class="item-list-temperature">' +
+                    //       						weatherFourDays +
+                    //   						'</ul>' +
+                  		// 				'</div>' +
+              						// '</div>' +
+          						'</div>';
+    		document.body.insertAdjacentHTML('afterBegin', curWeatherHTML);
+    	};
+
+      window.addEventListener('DOMContentLoaded', function(){
+      	var newWeather = new Weather();
+      });
+    </script>
+</body>
+</html>
