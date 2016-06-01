@@ -10,11 +10,8 @@
     <script>
     	function Weather(){
     		var self = this;
-    		// this.codeCurImgMin = '';
     		var xhr = new XMLHttpRequest();
-
     		this.forecastHTML = '';
-
     		this.xhrObject;
     		
 	        xhr.open('GET', 'https://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20woeid%3D918233%20and%20u%3D%22c%22&format=json&l=ru', true);
@@ -30,17 +27,12 @@
 	  	            // console.log(self.codeCurImgMin);
 			        }
 	        };
-	        xhr.send();
 
-	        // this.callBack = function(key, val){
-	        //   // console.log(val.code);
-	        //     return val.code;
-	        // };
+	        xhr.send();
 
 	        this.getItem = function(obj, prop, callback){
 	          for(var key in obj){
 	              if(key == prop) {
-	              	// console.log(key + ' ' + obj[key]);
 	                  callback(key, obj[key]);
 	                  return;
 	              } else if(typeof obj[key] == 'object'){
@@ -48,10 +40,6 @@
 	              }
 	          };
 	        };
-
-	        // this.getCurrentWeather();
-	        // console.log(self.codeCurImgMin);
-		        
 	    };
 
     	Weather.prototype.getCurrentWeather = function(key, val){
@@ -108,9 +96,7 @@
 			    };
 			    return description[text];
 	    	};
-    		// console.log(val);
-    		// console.log(cod);
-    		// console.log(self.codeCurImgMin);
+
     		var curWeatherHTML = '<div class="drop-weather-button">' +
               						'<div class="outer-today-ico">' +
                   						'<span class="icons-for-c-min icon-weather-min-' + val.code +'"></span>' +
@@ -155,34 +141,15 @@
 			        Sat: 'Субота',
 			        Sun: 'Недiля'
 			    };
-			    // console.log(days[day]);
 			    return days[day];
 	    	};	    	
-    		// console.log(this.getDayUkr(val[1].day));
-    		// console.log(val);
-    		// var pattForecast = document.querySelector('ul.item-list-temperature');
     		forecastHTML = '<li class="item-time-temperature">' +
             					'<span class="icons-for-c icon-weather-' + val[1].code + '"></span>' +
             					'<span class="day">' + getDayUkr(val[1].day) + '</span>' + 
             					'<span class="temperature-days high-temperature">' + val[1].high + 'С°</span>' +
             					'<span class="temperature-days low-temperature">' + val[1].low + 'С°</span>' +
         					'</li>';
-            // pattForecast.insertAdjacentHTML('afterBegin', forecastHTML);
     	};
-
-	    // Weather.prototype.getDayUkr = function(day){
-    	// 	var days = {
-		   //      Mon: 'Понедiлок',
-		   //      Tue: 'Вiвторок',
-		   //      Wed: 'Середа',
-		   //      Thu: 'Четвер',
-		   //      Fri: 'П`ятниця',
-		   //      Sat: 'Субота',
-		   //      Sun: 'Недiля'
-		   //  };
-		   //  // console.log(days[day]);
-		   //  return days[day];
-    	// };
 
 	    window.addEventListener('DOMContentLoaded', function(){
 	      	var newWeather = new Weather();
