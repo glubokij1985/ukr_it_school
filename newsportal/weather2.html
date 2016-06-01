@@ -13,81 +13,180 @@
     		// this.codeCurImgMin = '';
     		var xhr = new XMLHttpRequest();
 
+    		this.forecastHTML = '';
+
     		this.xhrObject;
     		
-        xhr.open('GET', 'https://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20woeid%3D918233%20and%20u%3D%22c%22&format=json&l=ru', true);
+	        xhr.open('GET', 'https://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20woeid%3D918233%20and%20u%3D%22c%22&format=json&l=ru', true);
 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                self.xhrObject = JSON.parse(xhr.responseText);
-                // console.log(self.xhrObject);
-                self.getItem(self.xhrObject, 'condition', self.callBack);
-                // console.log(val.code);
-  	            // self.getCurrentWeather(self.codeCurImgMin);
-  	            // console.log(self.codeCurImgMin);
-		        }
-        };
-        xhr.send();
+	        xhr.onreadystatechange = function() {
+	            if (xhr.readyState === 4 && xhr.status === 200) {
+	                self.xhrObject = JSON.parse(xhr.responseText);
+	                // console.log(self.xhrObject);
+	                self.getItem(self.xhrObject, 'forecast', self.getForecast);
+	                self.getItem(self.xhrObject, 'condition', self.getCurrentWeather);	                
+	                // console.log(val.code);
+	  	            // self.getCurrentWeather(self.codeCurImgMin);
+	  	            // console.log(self.codeCurImgMin);
+			        }
+	        };
+	        xhr.send();
 
-        this.callBack = function(key, val){
-          // console.log(val.code);
-            return val.code;
-        };
+	        // this.callBack = function(key, val){
+	        //   // console.log(val.code);
+	        //     return val.code;
+	        // };
 
-        this.getItem = function(obj, prop, callback){
-          for(var key in obj){
-              if(key == prop) {
-                  callback(key, obj[key]);
-              } else if(typeof obj[key] == 'object'){
-                  self.getItem(obj[key], prop, callback);
-              }
-          };
-        };
+	        this.getItem = function(obj, prop, callback){
+	          for(var key in obj){
+	              if(key == prop) {
+	              	// console.log(key + ' ' + obj[key]);
+	                  callback(key, obj[key]);
+	                  return;
+	              } else if(typeof obj[key] == 'object'){
+	                  self.getItem(obj[key], prop, callback);
+	              }
+	          };
+	        };
 
-        this.getCurrentWeather();
-        // console.log(self.codeCurImgMin);
-	        
-    	};
+	        // this.getCurrentWeather();
+	        // console.log(self.codeCurImgMin);
+		        
+	    };
 
-    	Weather.prototype.getCurrentWeather = function(cod){
+    	Weather.prototype.getCurrentWeather = function(key, val){
+    		var getTextWeather = function(text){
+	    		var description = {
+					0: 'Торнадо',
+					1: 'Тропічний шторм',
+					2: 'Ураган',
+					3: 'Сильні грози',
+					4: 'Грози',
+					5: 'Змішаний дощ зi снігом',
+					6: 'Змішаний дощ зi снігом',
+					7: 'Змішаний дощ зi снігом',
+					8: 'Паморозь',
+					9: 'Мряка',
+					10: 'Град',
+					11: 'Зливи',
+					12: 'Зливи',
+					13: 'Сніговi пориви',
+					14: 'Легкий сніг',
+					15: 'Хуртовина',
+					16: 'Снiг',
+					17: 'Град',
+					18: 'Дощ зі снігом',
+					19: 'Туманно',
+					20: 'Туманно',
+					21: 'Туманно',
+					22: 'Туманно',
+					23: 'Вітрянно',
+					24: 'Вітрянно',
+					25: 'Прохолодно',
+					26: 'Хмарно',
+					27: 'Переважно хмарно',
+					28: 'Переважно хмарно',
+					29: 'Мінлива хмарність',
+					30: 'Мінлива хмарність',
+					31: 'Ясно',
+					32: 'Сонячно',
+					33: 'Ясно',
+					34: 'Ясно',
+					35: 'Змішаний дощ з градом',
+					36: 'Спекотно',
+					37: 'Грози',
+					38: 'Розсіяні грози',
+					39: 'Розсіяні грози',
+					40: 'Мінлива хмарність',
+					41: 'Сильний снігопад',
+					42: 'Снігопад',
+					43: 'Сильний снігопад',
+					44: 'Мінлива хмарність',
+					45: 'Зливи',
+					46: 'Зливовий сніг',
+					47: 'Зливи'
+			    };
+			    return description[text];
+	    	};
+    		// console.log(val);
     		// console.log(cod);
     		// console.log(self.codeCurImgMin);
     		var curWeatherHTML = '<div class="drop-weather-button">' +
               						'<div class="outer-today-ico">' +
-                  						'<span class="icons-for-c-min icon-weather-min-' + cod +'"></span>' +
-                  						// '<i class="today-weather">' + todayWeather + 'С°</i>' + 
+                  						'<span class="icons-for-c-min icon-weather-min-' + val.code +'"></span>' +
+                  						'<i class="today-weather">' + val.temp + 'С°</i>' + 
               						'</div>' +
-              						// '<div class="drop-wether">' +
-                  		// 				'<p class="for-genwether"><span class="title-weather">Погода</span><span class="city-weather">Украина, Чернигов</span></p>' +
-                  		// 				'<div class="section-today">' +
-                				// 			'<div class="for-weather-icon">' +
-                  		// 						'<h5 class="section-heading">Сьогодні</h5>' +
-                  		// 						'<span class="icons-for-c icon-weather-' + codeCurImg + '"></span>' +
-                				// 			'</div>' +
-              						// 		'<div class="weather-detail">' +
-                  		// 						'<h4 class="weather-heading">' +
-                    //   								'<span class="temp-now">' + currentWeather + 'С°</span>' +
-                    //   								'<span class="phrase">Температура зараз</span>' +
-                  		// 						'</h4>' +
-                  		// 						'<span class="temperature high-temperature">' + curTempMax + 'С°</span>' +
-                  		// 						'<span class="temperature low-temperature">' + curTempMin +'С°</span>' +
-                  		// 						'<p class="summary">' + weatherConditions + '</p>' +
-              						// 		'</div>' +
-                  		// 				'</div>' +
-                  		// 				'<div class="section-this-week">' +
-                    //   						'<h5 class="section-heading">Тиждень</h5>' +
-                    //   						'<ul class="item-list-temperature">' +
-                    //       						weatherFourDays +
-                    //   						'</ul>' +
-                  		// 				'</div>' +
-              						// '</div>' +
+              						'<div class="drop-wether">' +
+                  						'<p class="for-genwether"><span class="title-weather">Погода</span><span class="city-weather">Украина, Чернигов</span></p>' +
+                  						'<div class="section-today">' +
+                							'<div class="for-weather-icon">' +
+                  								'<h5 class="section-heading">Сьогодні</h5>' +
+                  								'<span class="icons-for-c icon-weather-' + val.code + '"></span>' +
+                							'</div>' +
+              								'<div class="weather-detail">' +
+                  								'<h4 class="weather-heading">' +
+                      								'<span class="temp-now">' + val.temp + 'С°</span>' +
+                      								'<span class="phrase">Температура зараз</span>' +
+                  								'</h4>' +
+                  								// '<span class="temperature high-temperature">' + curTempMax + 'С°</span>' +
+                  								// '<span class="temperature low-temperature">' + curTempMin +'С°</span>' +
+                  								'<p class="summary">' + getTextWeather(val.text) + '</p>' +
+              								'</div>' +
+                  						'</div>' +
+                  						'<div class="section-this-week">' +
+                      						'<h5 class="section-heading">Тиждень</h5>' +
+                      						'<ul class="item-list-temperature">' +
+                          						this.forecastHTML +
+                      						'</ul>' +
+                  						'</div>' +
+              						'</div>' +
           						'</div>';
     		document.body.insertAdjacentHTML('afterBegin', curWeatherHTML);
     	};
 
-      window.addEventListener('DOMContentLoaded', function(){
-      	var newWeather = new Weather();
-      });
+    	Weather.prototype.getForecast = function(key, val){
+    		var getDayUkr = function(day){
+	    		var days = {
+			        Mon: 'Понедiлок',
+			        Tue: 'Вiвторок',
+			        Wed: 'Середа',
+			        Thu: 'Четвер',
+			        Fri: 'П`ятниця',
+			        Sat: 'Субота',
+			        Sun: 'Недiля'
+			    };
+			    // console.log(days[day]);
+			    return days[day];
+	    	};	    	
+    		// console.log(this.getDayUkr(val[1].day));
+    		// console.log(val);
+    		// var pattForecast = document.querySelector('ul.item-list-temperature');
+    		forecastHTML = '<li class="item-time-temperature">' +
+            					'<span class="icons-for-c icon-weather-' + val[1].code + '"></span>' +
+            					'<span class="day">' + getDayUkr(val[1].day) + '</span>' + 
+            					'<span class="temperature-days high-temperature">' + val[1].high + 'С°</span>' +
+            					'<span class="temperature-days low-temperature">' + val[1].low + 'С°</span>' +
+        					'</li>';
+            // pattForecast.insertAdjacentHTML('afterBegin', forecastHTML);
+    	};
+
+	    // Weather.prototype.getDayUkr = function(day){
+    	// 	var days = {
+		   //      Mon: 'Понедiлок',
+		   //      Tue: 'Вiвторок',
+		   //      Wed: 'Середа',
+		   //      Thu: 'Четвер',
+		   //      Fri: 'П`ятниця',
+		   //      Sat: 'Субота',
+		   //      Sun: 'Недiля'
+		   //  };
+		   //  // console.log(days[day]);
+		   //  return days[day];
+    	// };
+
+	    window.addEventListener('DOMContentLoaded', function(){
+	      	var newWeather = new Weather();
+	    });
     </script>
 </body>
 </html>
