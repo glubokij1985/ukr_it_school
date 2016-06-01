@@ -18,13 +18,9 @@
 
 	        xhr.onreadystatechange = function() {
 	            if (xhr.readyState === 4 && xhr.status === 200) {
-	                self.xhrObject = JSON.parse(xhr.responseText);
-	                // console.log(self.xhrObject);
-	                self.getItem(self.xhrObject, 'forecast', self.getForecast);
-	                self.getItem(self.xhrObject, 'condition', self.getCurrentWeather);	                
-	                // console.log(val.code);
-	  	            // self.getCurrentWeather(self.codeCurImgMin);
-	  	            // console.log(self.codeCurImgMin);
+		                self.xhrObject = JSON.parse(xhr.responseText);
+		                self.getItem(self.xhrObject, 'forecast', self.getForecast);
+		                self.getItem(self.xhrObject, 'condition', self.getCurrentWeather);	                
 			        }
 	        };
 
