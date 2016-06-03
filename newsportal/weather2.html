@@ -124,9 +124,12 @@
               						'</div>' +
           						'</div>';
     		document.body.insertAdjacentHTML('afterBegin', curWeatherHTML);
+    		console.log('Погодные условия ' + val.text);
     	};
 
     	Weather.prototype.getForecast = function(key, val){
+        	// console.log(val[1].date.getMonth());
+
     		var getDayUkr = function(day){
 	    		var days = {
 			        Mon: 'Понедiлок',
@@ -138,10 +141,29 @@
 			        Sun: 'Недiля'
 			    };
 			    return days[day];
-	    	};	    	
+	    	};
+	    	// var getMounth = function(mounth){            
+	     //        var mounthObject = {
+	     //            uk: {
+	     //                1: "Січня",
+	     //                2: "Лютого",
+	     //                3: "Березня",
+	     //                4: "Квітня",
+	     //                5: "Травня",
+	     //                6: "Червня",
+	     //                7: "Липня",
+	     //                8: "Серпня",
+	     //                9: "Вересня",
+	     //                10: "Жовтня",
+	     //                11: "Листопада",
+	     //                12: "Грудня"
+	     //            }
+	     //        };            
+	     //        return mounthObject[mounth];
+	     //    };
     		forecastHTML = '<li class="item-time-temperature">' +
             					'<span class="icons-for-c icon-weather-' + val[1].code + '"></span>' +
-            					'<span class="day">' + getDayUkr(val[1].day) + '</span>' + 
+            					'<span class="day">' + getDayUkr(val[1].day) + ', ' + val[1].date + ', ' + '</span>' + 
             					'<span class="temperature-days high-temperature">' + val[1].high + 'С°</span>' +
             					'<span class="temperature-days low-temperature">' + val[1].low + 'С°</span>' +
         					'</li>';
