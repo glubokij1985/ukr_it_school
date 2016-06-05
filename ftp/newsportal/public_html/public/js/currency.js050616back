@@ -1,0 +1,102 @@
+function Currency(){
+	var self = this;
+	var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'http://' + location.hostname + '/site/tryCurrency', true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+                var xhrObject = JSON.parse(xhr.responseText);
+                self.getItem(xhrObject, 'item', self.getCurrency, self);  
+	        }
+    };
+
+    xhr.send();
+
+    this.getItem = function(obj, prop, callback, self){
+      	for(var key in obj){
+          	if(key == prop) {
+              	callback(obj[key], self);
+              	return;
+          	} else if(typeof obj[key] == 'object'){
+              	self.getItem(obj[key], prop, callback, self);
+          	}
+      	};
+    };
+};
+
+Currency.prototype.getCurrency = function(val, self){
+	var currencyHTML = '<table class="-new-currensy">' +
+                          '<tr>' +
+                            '<th>' +
+                              '<span>Банк</span>' +
+                            '</th>' +
+                            '<th>' +
+                              '<span style="font-size: 18px">&#402;</span>' +
+                            '</th>' +
+                            '<th>' +
+                              '<span>Покупка</span>' +
+                            '</th>' +
+                            '<th>' +
+                              '<span>Продажа</span>' +
+                            '</th>' +
+                          '</tr>' +
+                          '<tr>' +
+                              '<td>' +
+                                  '<p><i>' + val.bankName + '</i></p>' +
+                              '</td>' +
+                              '<td>' +
+                                  '<span>' +
+                                    '<b>&euro;</b>' +
+                                  '</span>' +
+                                  '<span>' +
+                                    '<b>$</b>' +
+                                  '</span>' +
+                                  '<span>' +
+                                    '<b>R</b>' +
+                                  '</span>' +
+                              '</td>' +
+                              '<td>' +
+                                  '<span>' + val.euro.rateBuy + '</span>' + 
+                                  '<span>' + val.usd.rateBuy + '</span>' +
+                                  '<span>' + val.rub.rateBuy + '</span>' +
+                              '</td>' +
+                              '<td>' +
+                                  '<span>' + val.euro.rateSale + '</span>' +
+                                  '<span>' + val.usd.rateSale + '</span>' +
+                                  '<span>' + val.rub.rateSale + '</span>' +
+                              '</td>' +
+                          '</tr>' +
+                        '</table>';
+	document.body.insertAdjacentHTML('afterBegin', currencyHTML);
+};
+
+Currency.prototype.getForecast = function(val, self){
+
+	var getDayUkr = function(day){
+		var days = {
+	        Mon: 'Понедiлок',
+	        Tue: 'Вiвторок',
+	        Wed: 'Середа',
+	        Thu: 'Четвер',
+	        Fri: 'П`ятниця',
+	        Sat: 'Субота',
+	        Sun: 'Недiля'
+	    };
+	    return days[day];
+	};
+	var li = '';
+	for(var i = 1; i < 5; i++){	    		
+		li += '<li class="item-time-temperature">' +
+					'<span class="icons-for-c icon-weather-' + val[i].code + '"></span>' +
+					'<span class="day">' + getDayUkr(val[i].day) + ', ' + val[i].date + ', ' + '</span>' + 
+					'<span class="temperature-days high-temperature">' + val[i].high + 'С°</span>' +
+					'<span class="temperature-days low-temperature">' + val[i].low + 'С°</span>' +
+				'</li>';	    		
+	};
+	return li;
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+  	var newWeather = new Currency();
+});

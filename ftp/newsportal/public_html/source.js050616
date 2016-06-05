@@ -1,0 +1,10 @@
+function returnSource(){
+	var files = [
+        './public/js/helper.js', 
+        './public/js/app.js',
+        './public/js/slider.js'
+    ];
+	return files;
+}
+
+module.exports.returnSource = returnSource;
