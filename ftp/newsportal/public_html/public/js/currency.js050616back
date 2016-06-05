@@ -7,7 +7,7 @@ function Currency(){
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
                 var xhrObject = JSON.parse(xhr.responseText);
-                self.getItem(xhrObject, 'item', self.getCurrency, self);  
+                self.getItem(xhrObject, 'bankName', self.getCurrency, self);  
 	        }
     };
 
@@ -16,7 +16,7 @@ function Currency(){
     this.getItem = function(obj, prop, callback, self){
       	for(var key in obj){
           	if(key == prop) {
-              	callback(obj[key], self);
+              	callback(obj, self);
               	return;
           	} else if(typeof obj[key] == 'object'){
               	self.getItem(obj[key], prop, callback, self);
@@ -25,8 +25,38 @@ function Currency(){
     };
 };
 
-Currency.prototype.getCurrency = function(val, self){
-	var currencyHTML = '<table class="-new-currensy">' +
+Currency.prototype.getCurrency = function(obj, self){
+  var arrBanks = ['ПриватБанк', 'ПУМБ', 'Укрсоцбанк'];
+  var bank = '';  
+  for(va i = 0; i < arrBanks.length; i++){
+    bank += '<tr>' +
+                '<td>' +
+                    '<p><i>' + obj.bankName + '</i></p>' +
+                '</td>' +
+                '<td>' +
+                    '<span>' +
+                      '<b>&euro;</b>' +
+                    '</span>' +
+                    '<span>' +
+                      '<b>$</b>' +
+                    '</span>' +
+                    '<span>' +
+                      '<b>R</b>' +
+                    '</span>' +
+                '</td>' +
+                '<td>' +
+                    // '<span>' + val.euro.rateBuy + '</span>' + 
+                    // '<span>' + val.usd.rateBuy + '</span>' +
+                    // '<span>' + val.rub.rateBuy + '</span>' +
+                '</td>' +
+                '<td>' +
+                    // '<span>' + val.euro.rateSale + '</span>' +
+                    // '<span>' + val.usd.rateSale + '</span>' +
+                    // '<span>' + val.rub.rateSale + '</span>' +
+                '</td>' +
+            '</tr>';
+  };
+  var currencyHTML = '<table class="-new-currensy">' +
                           '<tr>' +
                             '<th>' +
                               '<span>Банк</span>' +
@@ -41,33 +71,9 @@ Currency.prototype.getCurrency = function(val, self){
                               '<span>Продажа</span>' +
                             '</th>' +
                           '</tr>' +
-                          '<tr>' +
-                              '<td>' +
-                                  '<p><i>' + val.bankName + '</i></p>' +
-                              '</td>' +
-                              '<td>' +
-                                  '<span>' +
-                                    '<b>&euro;</b>' +
-                                  '</span>' +
-                                  '<span>' +
-                                    '<b>$</b>' +
-                                  '</span>' +
-                                  '<span>' +
-                                    '<b>R</b>' +
-                                  '</span>' +
-                              '</td>' +
-                              '<td>' +
-                                  '<span>' + val.euro.rateBuy + '</span>' + 
-                                  '<span>' + val.usd.rateBuy + '</span>' +
-                                  '<span>' + val.rub.rateBuy + '</span>' +
-                              '</td>' +
-                              '<td>' +
-                                  '<span>' + val.euro.rateSale + '</span>' +
-                                  '<span>' + val.usd.rateSale + '</span>' +
-                                  '<span>' + val.rub.rateSale + '</span>' +
-                              '</td>' +
-                          '</tr>' +
-                        '</table>';
+                            bank +
+                        '</table>';  
+  console.log(currencyHTML);
 	document.body.insertAdjacentHTML('afterBegin', currencyHTML);
 };
 
