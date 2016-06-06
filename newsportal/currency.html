@@ -8,127 +8,89 @@
 <body>
 		
     <script>
-    	function Weather(){
-    		var self = this;
-    		var xhr = new XMLHttpRequest();
+    	function Currency(){
+			var self = this;
+			var xhr = new XMLHttpRequest();
 
-	        xhr.open('GET', 'http://' + location.hostname + '/site/tryCurrency', true);
+		    xhr.open('GET', 'http://glubokiy.js.uitclassroom.com/site/tryCurrency', true);
 
-	        xhr.onreadystatechange = function() {
-	            if (xhr.readyState === 4 && xhr.status === 200) {
+		    xhr.onreadystatechange = function() {
+		        if (xhr.readyState === 4 && xhr.status === 200) {
 		                var xhrObject = JSON.parse(xhr.responseText);
-		                self.getItem(xhrObject, 'item', self.getCurrentWeather, self);  
-		                console.log(location.hostname);  
-		                console.log(xhr.responseText);             
+		                self.getItem(xhrObject, 'bankName', self.getCurrency, self);  
 			        }
-	        };
+		    };
 
-	        xhr.send();
+		    xhr.send();
 
-	        this.getItem = function(obj, prop, callback, self){
-	          	for(var key in obj){
-	              	if(key == prop) {
-	                  	callback(obj[key], self);
-	                  	return;
-	              	} else if(typeof obj[key] == 'object'){
-	                  	self.getItem(obj[key], prop, callback, self);
-	              	}
-	          	};
-	        };
-	    };
+		    this.getItem = function(obj, prop, callback, self){
+		      	for(var key in obj){
+		          	if(key == prop) {
+		              	callback(obj, self);
+		              	return;
+		          	} else if(typeof obj[key] == 'object'){
+		              	self.getItem(obj[key], prop, callback, self);
+		          	}
+		      	};
+		    };
+		};
 
-    	Weather.prototype.getCurrentWeather = function(val, self){
-    	// 	var getTextWeather = function(text){
-	    // 		var description = {
-					// 0: 'Торнадо',
-					// 1: 'Тропічний шторм',
-					// 2: 'Ураган',
-					// 3: 'Сильні грози',
-					// 4: 'Грози',
-					// 5: 'Змішаний дощ зi снігом',
-					// 6: 'Змішаний дощ зi снігом',
-					// 7: 'Змішаний дощ зi снігом',
-					// 8: 'Паморозь',
-					// 9: 'Мряка',
-					// 10: 'Град',
-					// 11: 'Зливи',
-					// 12: 'Зливи',
-					// 13: 'Сніговi пориви',
-					// 14: 'Легкий сніг',
-					// 15: 'Хуртовина',
-					// 16: 'Снiг',
-					// 17: 'Град',
-					// 18: 'Дощ зі снігом',
-					// 19: 'Туманно',
-					// 20: 'Туманно',
-					// 21: 'Туманно',
-					// 22: 'Туманно',
-					// 23: 'Вітрянно',
-					// 24: 'Вітрянно',
-					// 25: 'Прохолодно',
-					// 26: 'Хмарно',
-					// 27: 'Переважно хмарно',
-					// 28: 'Переважно хмарно',
-					// 29: 'Мінлива хмарність',
-					// 30: 'Мінлива хмарність',
-					// 31: 'Ясно',
-					// 32: 'Сонячно',
-					// 33: 'Ясно',
-					// 34: 'Ясно',
-					// 35: 'Змішаний дощ з градом',
-					// 36: 'Спекотно',
-					// 37: 'Грози',
-					// 38: 'Розсіяні грози',
-					// 39: 'Розсіяні грози',
-					// 40: 'Мінлива хмарність',
-					// 41: 'Сильний снігопад',
-					// 42: 'Снігопад',
-					// 43: 'Сильний снігопад',
-					// 44: 'Мінлива хмарність',
-					// 45: 'Зливи',
-					// 46: 'Зливовий сніг',
-					// 47: 'Зливи'
-			  //   };
-			  //   return description[text];
-	    // 	};
-    		var curWeatherHTML = '<div class="drop-weather-button">' +
-              						'<div class="outer-today-ico">' +
-                  						'<span class="icons-for-c-min icon-weather-min-' + val.condition.code +'"></span>' +
-                  						'<i class="today-weather">' + val.condition.temp + 'С°</i>' + 
-              						'</div>' +
-              						'<div class="drop-wether">' +
-                  						'<p class="for-genwether"><span class="title-weather">Погода</span><span class="city-weather">Украина, Чернигов</span></p>' +
-                  						'<div class="section-today">' +
-                							'<div class="for-weather-icon">' +
-                  								'<h5 class="section-heading">Сьогодні</h5>' +
-                  								'<span class="icons-for-c icon-weather-' + val.condition.code + '"></span>' +
-                							'</div>' +
-              								'<div class="weather-detail">' +
-                  								'<h4 class="weather-heading">' +
-                      								'<span class="temp-now">' + val.condition.temp + 'С°</span>' +
-                      								'<span class="phrase">Температура зараз</span>' +
-                  								'</h4>' +
-                  								// '<span class="temperature high-temperature">' + curTempMax + 'С°</span>' +
-                  								// '<span class="temperature low-temperature">' + curTempMin +'С°</span>' +
-                  								'<p class="summary">' + val.condition.text + '</p>' +
-              								'</div>' +
-                  						'</div>' +
-                  						'<div class="section-this-week">' +
-                      						'<h5 class="section-heading">Тиждень</h5>' +
-                      						'<ul class="item-list-temperature">' +
-                          						self.getForecast(val.forecast) +
-                      						'</ul>' +
-                  						'</div>' +
-              						'</div>' +
-          						'</div>';
-    		document.body.insertAdjacentHTML('afterBegin', curWeatherHTML);
-    		console.log('Погодные условия ' + val.condition.text);
-    	};
+		Currency.prototype.getCurrency = function(obj, self){
+		  var arrBanks = ['ПриватБанк', 'ПУМБ', 'Укрсоцбанк'];
+		  var bank = '';  
+		  for(var i = 0; i < arrBanks.length; i++){
+		    bank += '<tr>' +
+		                '<td>' +
+		                    '<p><i>' + obj.bankName + '</i></p>' +
+		                '</td>' +
+		                '<td>' +
+		                    '<span>' +
+		                      '<b>&euro;</b>' +
+		                    '</span>' +
+		                    '<span>' +
+		                      '<b>$</b>' +
+		                    '</span>' +
+		                    '<span>' +
+		                      '<b>R</b>' +
+		                    '</span>' +
+		                '</td>' +
+		                '<td>' +
+		                    // '<span>' + val.euro.rateBuy + '</span>' + 
+		                    // '<span>' + val.usd.rateBuy + '</span>' +
+		                    // '<span>' + val.rub.rateBuy + '</span>' +
+		                '</td>' +
+		                '<td>' +
+		                    // '<span>' + val.euro.rateSale + '</span>' +
+		                    // '<span>' + val.usd.rateSale + '</span>' +
+		                    // '<span>' + val.rub.rateSale + '</span>' +
+		                '</td>' +
+		            '</tr>';
+		  };
+		  var currencyHTML = '<table class="-new-currensy">' +
+		                          '<tr>' +
+		                            '<th>' +
+		                              '<span>Банк</span>' +
+		                            '</th>' +
+		                            '<th>' +
+		                              '<span style="font-size: 18px">&#402;</span>' +
+		                            '</th>' +
+		                            '<th>' +
+		                              '<span>Покупка</span>' +
+		                            '</th>' +
+		                            '<th>' +
+		                              '<span>Продажа</span>' +
+		                            '</th>' +
+		                          '</tr>' +
+		                            bank +
+		                        '</table>';  
+		  console.log(currencyHTML);
+			document.body.insertAdjacentHTML('afterBegin', currencyHTML);
+		};
 
-    	Weather.prototype.getForecast = function(val, self){
+		Currency.prototype.getForecast = function(val, self){
 
-    		var getDayUkr = function(day){
-	    		var days = {
+			var getDayUkr = function(day){
+				var days = {
 			        Mon: 'Понедiлок',
 			        Tue: 'Вiвторок',
 			        Wed: 'Середа',
@@ -138,22 +100,22 @@
 			        Sun: 'Недiля'
 			    };
 			    return days[day];
-	    	};
-	    	var li = '';
-	    	for(var i = 1; i < 5; i++){	    		
-	    		li += '<li class="item-time-temperature">' +
-	    					'<span class="icons-for-c icon-weather-' + val[i].code + '"></span>' +
-	    					'<span class="day">' + getDayUkr(val[i].day) + ', ' + val[i].date + ', ' + '</span>' + 
-	    					'<span class="temperature-days high-temperature">' + val[i].high + 'С°</span>' +
-	    					'<span class="temperature-days low-temperature">' + val[i].low + 'С°</span>' +
+			};
+			var li = '';
+			for(var i = 1; i < 5; i++){	    		
+				li += '<li class="item-time-temperature">' +
+							'<span class="icons-for-c icon-weather-' + val[i].code + '"></span>' +
+							'<span class="day">' + getDayUkr(val[i].day) + ', ' + val[i].date + ', ' + '</span>' + 
+							'<span class="temperature-days high-temperature">' + val[i].high + 'С°</span>' +
+							'<span class="temperature-days low-temperature">' + val[i].low + 'С°</span>' +
 						'</li>';	    		
-	    	};
-    		return li;
-    	};
+			};
+			return li;
+		};
 
-	    window.addEventListener('DOMContentLoaded', function(){
-	      	var newWeather = new Weather();
-	    });
+		window.addEventListener('DOMContentLoaded', function(){
+		  	var newWeather = new Currency();
+		});
     </script>
 </body>
 </html>
