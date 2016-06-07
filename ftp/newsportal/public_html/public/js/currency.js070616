@@ -1,0 +1,143 @@
+function Currency(){
+	var self = this;
+  // this.bank = '';
+	var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://' + location.hostname + '/site/tryCurrency', true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var xhrObject = JSON.parse(xhr.responseText);
+            // for(var i = 0; i < xhrObject.length; i++){
+            //   if(xhrObject[i].bankName == 'ПриватБанк' || xhrObject[i].bankName == 'ПУМБ' || xhrObject[i].bankName == 'Укрсоцбанк'){
+            //     self.getItem(xhrObject[i], 'bankName', self.getCurrency, self);
+            //   }
+            // }            
+			self.getBanksObj(xhrObject);
+	      }
+    };
+
+    xhr.send();    
+};
+
+Currency.prototype.getBanksObj = function(xhrObject){
+	var bankObj = [],
+		current = "";
+
+	for (var i = 0; i < xhrObject.length; i++) {
+		
+		if(current != xhrObject[i].bankName){
+			if(obj){
+				bankObj.push(obj);
+			} else {
+				var obj = {};
+				obj.bankName = xhrObject[i].bankName;
+				obj[xhrObject[i].codeAlpha] = {
+					rateBuy: xhrObject[i].rateBuy,
+					rateBuyDelta: xhrObject[i].rateBuyDelta,
+					rateSale: xhrObject[i].rateSale,
+					rateSaleDelta: xhrObject[i].rateSaleDelta
+				}
+			}		
+		} else {
+			obj[xhrObject[i].codeAlpha] = {
+				rateBuy: xhrObject[i].rateBuy,
+				rateBuyDelta: xhrObject[i].rateBuyDelta,
+				rateSale: xhrObject[i].rateSale,
+				rateSaleDelta: xhrObject[i].rateSaleDelta
+			}
+		};
+		current = xhrObject[i].bankName;
+	};
+	console.log(current);
+	console.log(bankObj);
+
+	
+
+
+	/*for(var i = 0; i < xhrObject.length; i++){
+		self.getItem(xhrObject, 'bankName', getBank, self);
+	};
+	var getBank = function(obj, self){
+		for(var key in obj){
+			bankObj.key = key;
+		}
+	};
+	console.log(bankObj);*/
+};
+
+
+
+// Currency.prototype.getCurrency = function(obj, self){
+//   var curWrap = document.querySelector('.-with-before.-currency-val');
+//   var arrBanks = ['ПриватБанк', 'ПУМБ', 'Укрсоцбанк'];
+//   var arrCurren = ['EUR', 'USD', 'RUB'];
+//   var bank = '';
+//   for(var i = 0; i < arrBanks.length; i++){
+//     // if(obj.bankName.toLowerCase() == arrBanks[i].toLowerCase()){
+//       bank += '<tr>' +
+//                 '<td>' +
+//                     '<p><i>' + obj.bankName + '</i></p>' +
+//                 '</td>' +
+//                 '<td>' +
+//                     '<span>' +
+//                       '<b>&euro;</b>' +
+//                     '</span>' +
+//                     '<span>' +
+//                       '<b>$</b>' +
+//                     '</span>' +
+//                     '<span>' +
+//                       '<b>R</b>' +
+//                     '</span>' +
+//                 '</td>' +
+//                 '<td>' +
+//                     '<span>' + 
+//                       obj.rateBuy + 
+//                     '</span>' + 
+//                     '<span>' + 
+//                       obj.rateBuy +
+//                     '</span>' +
+//                     '<span>' + 
+//                       obj.rateBuy +
+//                     '</span>' +
+//                 '</td>' +
+//                 '<td>' +
+//                     '<span>' + 
+//                       obj.rateSale + 
+//                     '</span>' + 
+//                     '<span>' + 
+//                       obj.rateSale +
+//                     '</span>' +
+//                     '<span>' + 
+//                       obj.rateSale +
+//                     '</span>' +
+//                 '</td>' +
+//             '</tr>';
+//       // };
+//   };
+
+//   var currencyHTML = '<table class="-new-currensy">' +
+//                           '<tr>' +
+//                             '<th>' +
+//                               '<span>Банк</span>' +
+//                             '</th>' +
+//                             '<th>' +
+//                               '<span style="font-size: 18px">&#402;</span>' +
+//                             '</th>' +
+//                             '<th>' +
+//                               '<span>Покупка</span>' +
+//                             '</th>' +
+//                             '<th>' +
+//                               '<span>Продажа</span>' +
+//                             '</th>' +
+//                           '</tr>' +
+//                             bank +
+//                         '</table>';  
+//   console.log(bank);
+//   console.log(obj.bankName);
+// 	curWrap.insertAdjacentHTML('beforeEnd', currencyHTML);
+// };
+
+window.addEventListener('DOMContentLoaded', function(){
+  	var newCurrency = new Currency();
+});
+

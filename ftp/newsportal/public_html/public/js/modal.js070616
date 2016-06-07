@@ -1,0 +1,38 @@
+function Modal(){
+    var self = this;
+    // this.loginBtn = document.querySelector('.-login');
+    // this.registrBtn = document.querySelector('.-registration');
+    // this.redactBtn = document.querySelector('.-about');
+    // this.remembBtn = document.querySelector('.-val-remember-pass');
+    // this.loginModal = document.querySelector('.-login-modal');
+    // this.registrModal = document.querySelector('.-reg-modal');
+    // this.redactModal = document.querySelector('.-about-modal');
+
+    this.buttons = this.getElemByAttr('data-attr');
+    window.addEventListener('click', self.openModal);
+    // console.log(buttons);
+};
+
+Modal.prototype.getElemByAttr = function(attr){
+    var arrElemsByAttr = [];
+    var allElems = document.getElementsByTagName('*');
+    for(var i = 0; i < allElems.length; i++){
+        if(allElems[i].getAttribute(attr) != null){
+            arrElemsByAttr.push(allElems[i]);
+        }
+    };
+    console.log(arrElemsByAttr);
+    return arrElemsByAttr;
+};
+
+Modal.prototype.openModal = function(event){
+    var target = event && event.target || event.srcElement;
+    for(var i = 0; i < self.buttons; i++){
+        if(target == self.buttons[i])
+        console.log(target);
+    }    
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+    var newModal = new Modal();    
+});
