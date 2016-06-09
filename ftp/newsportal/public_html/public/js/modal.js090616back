@@ -1,0 +1,98 @@
+function Modal(){
+    var self = this;
+
+    this.wrapModal = document.querySelector('.val-modal-login-reg-outer');
+
+    this.openModal = function(event){
+        var buttons = self.getElemByAttr('data-attr'),
+            target = event && event.target || event.srcElement;
+        for(var i = 0; i < buttons.length; i++){
+            if(target == buttons[i]){
+                var targetAttr = buttons[i].getAttribute('data-attr'),
+                    targetModal = document.querySelector('.' + targetAttr);
+                self.wrapModal.style.cssText += 'display: block;';
+                setTimeout(function(){
+                    self.wrapModal.style.cssText += 'opacity: 1;';
+                }, 1);
+                targetModal.style.cssText += 'display: block;';
+                setTimeout(function(){
+                    targetModal.style.cssText += 'opacity: 1;';
+                }, 1);
+            };
+        };
+
+        var remembBtn = document.querySelector('#login .-val-remember-pass'),
+            remembBack = document.querySelector('#remember .-val-remember-pass'),
+            loginForm = document.getElementById('login'),
+            remembForm = document.getElementById('remember');
+        if(target == remembBtn){
+            loginForm.style.cssText += 'opacity: 0;';
+            setTimeout(function(){
+                loginForm.style.cssText += 'display: none;';
+            }, 1);
+            remembForm.style.cssText += 'display: block;';
+            setTimeout(function(){
+                remembForm.style.cssText += 'opacity: 1;';
+            }, 1);
+        };
+        if(target == remembBack){
+            remembForm.style.cssText += 'opacity: 0;';
+            setTimeout(function(){
+                remembForm.style.cssText += 'display: none;';
+            }, 1);
+            loginForm.style.cssText += 'display: block;';
+            setTimeout(function(){
+                loginForm.style.cssText += 'opacity: 1;';
+            }, 1);            
+        };
+    };
+
+    this.closeModal = function(event){
+        var target = event && event.target || event.srcElement,
+            closeBtn = document.querySelectorAll('.val-close-modals'),
+            modalAll = document.querySelectorAll('.val-content-for-login');
+        for(var i = 0; i < closeBtn.length; i++){
+            if(target == closeBtn[i]){
+                target.parentElement.style.cssText += 'opacity: 0;';
+                setTimeout(function(){
+                    target.parentElement.style.cssText += 'display: none;';
+                }, 500);
+                self.wrapModal.style.cssText += 'opacity: 0;';
+                setTimeout(function(){
+                    self.wrapModal.style.cssText += 'display: none;';
+                }, 500);
+            };            
+        };
+        if(target == self.wrapModal){
+            for(var i = 0; i < modalAll.length; i++){
+                modalAll[i].style.cssText += 'opacity: 0;';
+                setTimeout(function(){
+                    modalAll[i].style.cssText += 'display: none;';
+                }, 500);
+                self.wrapModal.style.cssText += 'opacity: 0;';
+                setTimeout(function(){
+                    self.wrapModal.style.cssText += 'display: none;';
+                }, 500);
+            };
+        };
+    };
+
+    this.getElemByAttr('data-attr');
+    window.addEventListener('click', self.openModal);
+    this.wrapModal.addEventListener('click', self.closeModal);
+};
+
+Modal.prototype.getElemByAttr = function(attr){
+    var arrElemsByAttr = [];
+    var allElems = document.getElementsByTagName('*');
+    for(var i = 0; i < allElems.length; i++){
+        if(allElems[i].getAttribute(attr) != null){
+            arrElemsByAttr.push(allElems[i]);
+        }
+    };
+    return arrElemsByAttr;
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+    var newModal = new Modal();    
+});
