@@ -1,0 +1,93 @@
+function Modal(){
+    var self = this;
+    this.loginBtn = document.querySelector('.-login');
+    this.regBtn = document.querySelector('.-registration');
+    this.redactBtn = document.querySelector('.-about');
+    this.remembBtns = document.querySelectorAll('.-val-remember-pass');
+    this.closeBtns = document.querySelectorAll('.val-close-modals');
+    this.wrapModal = document.querySelector('.val-modal-login-reg-outer');
+
+    this.openModal = function(event){
+        var buttons = self.getElemByAttr('data-attr'),
+            target = event && event.target || event.srcElement,
+            targetAttr = target.getAttribute('data-attr'),
+            targetModal = document.querySelector('.' + targetAttr),
+            loginForm = document.getElementById('login'),
+            remembForm = document.getElementById('remember');
+        if(targetAttr){
+            this.wrapModal.style.cssText += 'display: table;';
+            targetModal.style.cssText += 'display: block;';
+            setTimeout(function(){
+                self.wrapModal.style.cssText += 'opacity: 1;';
+                targetModal.style.cssText += 'opacity: 1;';
+            }, 1);
+        };
+        for(var i = 0; i < this.remembBtns.length; i++){
+            if(target == this.remembBtns[i]){
+                if(getComputedStyle(remembForm).display == 'none'){
+                    loginForm.style.cssText += 'display: none; opacity: 0;';
+                    remembForm.style.cssText += 'display: block; opacity: 1;';
+                } else {
+                    remembForm.style.cssText += 'display: none; opacity: 0;';
+                    loginForm.style.cssText += 'display: block; opacity: 1;';
+                }            
+            };
+        };
+    };
+
+    this.closeModal = function(event){
+        var target = event && event.target || event.srcElement;
+            modalAll = document.querySelectorAll('.val-content-for-login');
+        for(var i = 0; i < this.closeBtns.length; i++){
+            if(target == this.closeBtns[i]){
+                target.parentElement.style.cssText += 'opacity: 0;';
+                setTimeout(function(){
+                    target.parentElement.style.cssText += 'display: none;';
+                }, 500);
+                this.wrapModal.style.cssText += 'opacity: 0;';
+                setTimeout(function(){
+                    self.wrapModal.style.cssText += 'display: none;';
+                }, 500);
+            };            
+        };
+        if(target == this.wrapModal){
+            for(var i = 0; i < modalAll.length; i++){
+                if(getComputedStyle(modalAll[i]).display == 'block'){
+                    modalAll[i].style.cssText += 'opacity: 0;display: none;';
+                    self.wrapModal.style.cssText += 'opacity: 0;';
+                    setTimeout(function(){
+                        self.wrapModal.style.cssText += 'display: none;';
+                    }, 500);
+                    // console.log(getComputedStyle(self.wrapModal).display);
+                };
+            };
+        };
+    };
+
+    this.getElemByAttr('data-attr');
+    this.loginBtn.addEventListener('click', this.openModal.bind(this));
+    this.regBtn.addEventListener('click', this.openModal.bind(this));
+    this.redactBtn.addEventListener('click', this.openModal.bind(this));
+    for(var i = 0; i < this.remembBtns.length; i++){
+        this.remembBtns[i].addEventListener('click', this.openModal.bind(this));
+    };
+    for(var i = 0; i < this.closeBtns.length; i++){
+        this.closeBtns[i].addEventListener('click', this.closeModal.bind(this));
+    };
+    this.wrapModal.addEventListener('click', this.closeModal.bind(this));
+};
+
+Modal.prototype.getElemByAttr = function(attr){
+    var arrElemsByAttr = [];
+    var allElems = document.getElementsByTagName('*');
+    for(var i = 0; i < allElems.length; i++){
+        if(allElems[i].getAttribute(attr) != null){
+            arrElemsByAttr.push(allElems[i]);
+        }
+    };
+    return arrElemsByAttr;
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+    var newModal = new Modal();    
+});
