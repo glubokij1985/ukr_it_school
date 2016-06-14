@@ -1,0 +1,63 @@
+function CategorySingle(){
+    var self = this;
+    // this.id = 1;
+    // this.status = true;
+    this.handlerLoad();
+};
+
+CategorySingle.prototype.ajax = function(){    
+    var self = this;
+    var sourceId = document.getElementById('val-count-and-id'),
+        id = sourceId.getAttribute('data-id'),
+        count = sourceId.getAttribute('data-count');
+    // var scrollCurrent = window.pageYOffset + document.documentElement.clientHeight,
+    //     offsetNewsBlock = window.pageYOffset + document.querySelector('.val-full-width-category').getBoundingClientRect().top;
+    // if(self.status == true && scrollCurrent > offsetNewsBlock){        
+        var xhr = new XMLHttpRequest();
+        // self.status = false;
+        xhr.open('GET', '/site/GetCategoryByIdXhrOrNotId?id=' + id + '&offset=' + count, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var xhrObject = JSON.parse(xhr.responseText),
+                    news = JSON.parse(xhrObject.news);
+                self.loadNewsSingle(news, xhrObject.language);
+                console.log(news);
+            };
+        };
+        xhr.send();
+    // };
+};
+
+CategorySingle.prototype.handlerLoad = function(){
+    window.addEventListener('load', this.ajax.bind(this));
+};
+
+// CategorySingle.prototype.handlerScroll = function(){
+//     window.addEventListener('scroll', this.ajax.bind(this));
+// };
+
+CategorySingle.prototype.loadNewsSingle = function(news, lang){
+    var self = this;
+    var newsSingle = '';
+    // if(var i = 0; i < 16; i++){
+        newsSingle += '<a href="/site/news/' + news[0].id + '" class="val-block-gen-news">' +
+                            '<div class="val-image-block-gen-news">' +
+                                '<img src="/uploads/news/thumb/' + news[0].image + '">' +
+                            '</div>' +
+                            '<div class="val-description-block-gen-news">' +
+                                '<span class="val-news-view">' + news[0].views + '</span>' +
+                                '<span class="val-content-news-data">' + news[0].date + '</span>' +
+                                '<h3 class="val-content-news-title-small">' + news[0]['title_' + lang] + '</h3>' +
+                            '</div>' +
+                        '</a>';
+    // };
+        
+    var newsSingleBlock = document.getElementById('val-single-category');
+    newsSingleBlock.insertAdjacentHTML('beforeEnd', newsSingle);
+    // self.status = true;
+    // self.id++;
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+    var newCategorySingle = new CategorySingle();
+});
